@@ -6,6 +6,7 @@ import Atoms.Carbon;
 import Atoms.Hydrogen;
 import Atoms.atom;
 import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -29,20 +30,11 @@ public class GUI extends Application{
 	Painter mainFrame;
 	Pane creations, statusBar;
 	Button restart, pause, exit;
-	Timeline timer;
+//	Timeline timer;
+	AnimationTimer timer;
 	int step;
 	
-//	public GUI(int x, int y, ArrayList<atom> possibleObjects,Simulator simulator) {
-//		this.x = x;
-//		this.y = y;
-//		this.possibleObjects = possibleObjects;
-//		this.simulator = simulator;
-//		timer = new Timeline(10);
-//		timer.setCycleCount(Integer.MAX_VALUE);
-//
-//		
-//	}
-	
+
 	public GUI() {
 	}
 	
@@ -61,8 +53,8 @@ public class GUI extends Application{
 		possibleObjects.add(new Carbon(0,0));
 		possibleObjects.add(new Hydrogen(0,0));
 		simulator = new Simulator(x,y);
-		timer = new Timeline(10);
-		timer.setCycleCount(Integer.MAX_VALUE);
+//		timer = new Timeline(10);
+//		timer.setCycleCount(Integer.MAX_VALUE);
 	}
 	
 	
@@ -82,8 +74,8 @@ public class GUI extends Application{
 		BorderPane border = new BorderPane();
 		GridPane grid = new GridPane();
 		//Create node buttons
-		makeButton();
-	
+		makeButton(border);
+		
 		//Add to parrent scene
 		grid.add(restart, 1, 0);
 		grid.add(pause, 2, 0);
@@ -91,8 +83,53 @@ public class GUI extends Application{
 		border.setTop(grid);
 		border.setCenter(mainFrame);
 		
-		root.getChildren().add(border);
 		
+		
+		
+		root.getChildren().add(border);
+//		root.getChildren().add(canvas);
+		
+		//start show
+		primaryStage.setScene(scene);
+		primaryStage.show();
+//		timer.play();
+		
+		
+	}
+	
+	public void makeButton(BorderPane border){
+		//Buttons
+		restart = new Button("Restart");
+		restart.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent e){
+				System.out.println("Restart");
+			}
+		});
+		
+		pause = new Button("Pause");
+		pause.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent e){
+//				if(timer.getStatus() == Animation.Status.RUNNING){
+//					pause.setText("fortsett");
+//					timer.pause();
+//				}
+//				else{
+//					pause.setText("Pause");
+//					timer.play();
+//				}
+			}
+		});
+		
+		exit = new Button("Exit");
+		pause.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override public void handle(ActionEvent e){
+				System.out.println("Exit");
+				Platform.exit();
+			}
+		});
 		//creations buttons
 		GridPane grid1 = new GridPane();
 		int i = 1;
@@ -111,47 +148,6 @@ public class GUI extends Application{
 			i++;
 		}
 		border.setLeft(grid1);
-		
-		//start show
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		timer.play();
-		System.out.println(timer.statusProperty());
-		
-	}
-	
-	public void makeButton(){
-		//Buttons
-		restart = new Button("Restart");
-		restart.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override public void handle(ActionEvent e){
-				System.out.println("Restart");
-			}
-		});
-		
-		pause = new Button("Pause");
-		pause.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override public void handle(ActionEvent e){
-				if(timer.getStatus() == Animation.Status.RUNNING){
-					pause.setText("fortsett");
-					timer.pause();
-				}
-				else{
-					pause.setText("Pause");
-					timer.play();
-				}
-			}
-		});
-		
-		exit = new Button("Exit");
-		pause.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override public void handle(ActionEvent e){
-				Platform.exit();
-			}
-		});
 	}
 	
 	public static void main(String[] args) {
