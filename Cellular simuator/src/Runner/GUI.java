@@ -1,10 +1,13 @@
 package Runner;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Atoms.Carbon;
 import Atoms.Hydrogen;
+import Atoms.Oxygen;
 import Atoms.atom;
+import Molecules.CH4;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
@@ -23,8 +26,19 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUI extends Application{
+	//Position variables
 	static int x;
+	static int x_max;
+	static int x_min;
 	static int y;
+	static int y_max;
+	static int y_min;
+	static int scale = 100;
+	
+	boolean paused;
+	int step;
+	Random random = new Random();
+	//Objects
 	static ArrayList<atom> possibleObjects;
 	static Simulator simulator;
 	Painter mainFrame;
@@ -32,7 +46,7 @@ public class GUI extends Application{
 	Button restart, pause, exit;
 //	Timeline timer;
 	AnimationTimer timer;
-	int step;
+	
 	
 
 	public GUI() {
@@ -46,15 +60,21 @@ public class GUI extends Application{
 	public void init(){
 		//Bredde
 		x = 800;
+		x_max = x-(scale*2);
+		x_min = scale;
 		//Høyde
 		y = 600;
+		y_max = y-(scale*2);
+		y_min = scale;
 		System.out.println("This is a cell simualtion");
 	    possibleObjects = new ArrayList<atom>();
 		possibleObjects.add(new Carbon(0,0));
 		possibleObjects.add(new Hydrogen(0,0));
-		simulator = new Simulator(x,y);
-//		timer = new Timeline(10);
-//		timer.setCycleCount(Integer.MAX_VALUE);
+		possibleObjects.add(new Oxygen(0,0));
+		possibleObjects.add(new CH4());
+		
+		simulator = new Simulator(x_max,y_max,x_min,y_min);
+		step = 0;
 	}
 	
 	
@@ -65,7 +85,8 @@ public class GUI extends Application{
 		Group root = new Group();
 		Scene scene = new Scene(root,x,y);
 		//Canvas creation
-		Canvas canvas = new Canvas(x,y);
+		
+		Canvas canvas = new Canvas(x_max,y_max);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		//Create nodes
 		mainFrame = new Painter(simulator,gc);
@@ -81,20 +102,32 @@ public class GUI extends Application{
 		grid.add(pause, 2, 0);
 		grid.add(exit, 3, 0);
 		border.setTop(grid);
+		mainFrame.getChildren().add(canvas);
 		border.setCenter(mainFrame);
 		
 		
-		
-		
 		root.getChildren().add(border);
-//		root.getChildren().add(canvas);
 		
 		//start show
 		primaryStage.setScene(scene);
 		primaryStage.show();
-//		timer.play();
-		
-		
+		launchAnimation(gc);
+
+	}
+	public void launchAnimation(GraphicsContext gc){
+		timer = new AnimationTimer() {
+
+			@Override
+			public void handle(long arg0) {
+				simulator.objectExecutor();
+				gc.clearRect(x_min, y_min, x_max-x_min, y_max-y_min);
+				mainFrame.paint(gc);
+				step++;
+			}
+			
+		};
+		timer.start();
+		paused = false;
 	}
 	
 	public void makeButton(BorderPane border){
@@ -104,6 +137,9 @@ public class GUI extends Application{
 			
 			@Override public void handle(ActionEvent e){
 				System.out.println("Restart");
+				simulator.restart(x_max,y_max,x_min,y_min);
+				paused = false;
+				step = 0;
 			}
 		});
 		
@@ -111,19 +147,21 @@ public class GUI extends Application{
 		pause.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent e){
-//				if(timer.getStatus() == Animation.Status.RUNNING){
-//					pause.setText("fortsett");
-//					timer.pause();
-//				}
-//				else{
-//					pause.setText("Pause");
-//					timer.play();
-//				}
+				if(!paused){
+					pause.setText("fortsett");
+					timer.stop();
+					paused = true;
+				}
+				else{
+					pause.setText("Pause");
+					timer.start();
+					paused = false;
+				}
 			}
 		});
 		
 		exit = new Button("Exit");
-		pause.setOnAction(new EventHandler<ActionEvent>() {
+		exit.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override public void handle(ActionEvent e){
 				System.out.println("Exit");
@@ -140,21 +178,50 @@ public class GUI extends Application{
 			currentButton.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override public void handle(ActionEvent e){
-					System.out.println(currentAtom.toString());
+					createAtom(currentAtom);
 				}
 			});
-			
 			grid1.add(currentButton, 0, i);
 			i++;
 		}
+
 		border.setLeft(grid1);
 	}
 	
 	public static void main(String[] args) {
 		Application.launch();
 	}
-
 	
+	public void createAtom(atom currentAtom){
+		String name = currentAtom.toString();
+		if(name.equals("hydrogen")){
+			System.out.println(name);
+			Hydrogen hydrogen = new Hydrogen
+					(random.nextInt(x_max- x_min)+x_min,random.nextInt(y_max-y_min)+ y_min);
+			simulator.atom.add(hydrogen);
+		}
+		else if(name.equals("carbon")){
+			System.out.println(name);
+			Carbon carbon = new Carbon
+					(random.nextInt(x_max- x_min)+x_min,random.nextInt(y_max-y_min)+ y_min);
+			simulator.atom.add(carbon);
+		}
+		else if(name.equals("oxygen")){
+			System.out.println(name);
+			Oxygen oxygen = new Oxygen
+					(random.nextInt(x_max- x_min)+x_min,random.nextInt(y_max-y_min)+ y_min);
+			simulator.atom.add(oxygen);
+		}
+		else if(name.equals("CH4")){
+			System.out.println(name);
+			CH4 cH4 = new CH4();
+			ArrayList<atom> atoms = cH4.getAtomsOfMolecule();
+			for(atom a : atoms){
+				simulator.atom.add(a);
+			}
+			
+		}
+	}
 
 	
 	

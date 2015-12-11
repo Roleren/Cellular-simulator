@@ -1,21 +1,20 @@
 package Molecules;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Atoms.atom;
 
-public class molecule extends atom {
+public class Molecule extends atom {
 	
-	ArrayList<atom> atoms;
+	ArrayList<atom> atoms = new ArrayList<atom>();
 	int numberOfAtoms;
 	int totalCharge;
 	int totalWeight;
+	Random random = new Random();
+	int rx;
+	int ry;
 	
-	public molecule(atom one, atom two){
-		numberOfAtoms = 2;
-		totalCharge = one.getCharge() + two.getCharge();
-		
-	}
 	public void addAtom(atom that){
 		atoms.add(that);
 		numberOfAtoms++;
@@ -31,5 +30,7 @@ public class molecule extends atom {
 	public void setName(){
 		
 	}
-	
+	public ArrayList<atom> getAtomsOfMolecule(){
+		return atoms;
+	}
 }

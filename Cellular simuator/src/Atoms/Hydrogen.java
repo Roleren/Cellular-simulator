@@ -9,9 +9,10 @@ public class Hydrogen extends atom {
 		setWeight(isotope);
 		covalentRadius = 31;
 		vdwRadius = 120;
-		NumberOfValenceElectrons = 4;
-		setCharge(4);
+		NumberOfValenceElectrons = 1;
+		setCharge(1);
 		this.xPos = xPos;
 		this.yPos = yPos;
+		maxBindNumber = 1;
 	}
 }
