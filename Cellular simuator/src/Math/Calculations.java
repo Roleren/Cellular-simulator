@@ -3,10 +3,17 @@ package Math;
 import Atoms.atom;
 
 public class Calculations {
-	int x, y;
-	
+	int x, y,z;
+	/**
+	 * Euclidean distance
+	 * @param one
+	 * @param two
+	 * @return
+	 */
 	public static int senterAvstand(atom one, atom two){
-		return (int) Math.sqrt(Math.pow(one.getxPos()-two.getxPos(),2)+Math.pow(one.getyPos()-two.getyPos(),2));
+		return (int) Math.sqrt(Math.pow(one.getxPos()-two.getxPos(),2)
+						+Math.pow(one.getyPos()-two.getyPos(),2)
+								+Math.pow(one.getyPos()-two.getyPos(),2));
 	}
 	public static int xRetning(atom one, atom two){
 		int xr = (one.getxPos()-two.getxPos());
@@ -14,6 +21,10 @@ public class Calculations {
 	}
 	public static int yRetning(atom one, atom two){
 		int yr = (one.getyPos()-two.getyPos());
+		return yr;
+	}
+	public static int zRetning(atom one, atom two){
+		int yr = (one.getzPos()-two.getzPos());
 		return yr;
 	}
 	public static int xRetningNormal(atom one, atom two){

@@ -14,6 +14,7 @@ public class Molecule extends atom {
 	Random random = new Random();
 	int rx;
 	int ry;
+	int rz;
 	
 	public void addAtom(atom that){
 		atoms.add(that);

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import Math.Calculations;
 import Runner.Simulator;
+import javafx.scene.paint.PhongMaterial;
 
 public class atom {
 	int isotope;
@@ -18,13 +19,20 @@ public class atom {
 	private int charge;
 	Random random = new Random();
 	String bildeNavn;
+	PhongMaterial materialColor;
+	
+
 	boolean bound = false;
 	int bindNumber;
 	int maxBindNumber;
 	int xPos;
 	int yPos;
-	boolean moleculeBelowMinDist;
+	int zPos;
+	int dv;
+
+	boolean moleculeBelowMinMaxDist = false;
 	ArrayList<atom> boundAtoms = new ArrayList<atom>();
+	boolean colition = false;
 	/*
 	 * Checks if the atom can bind another atom
 	 */
@@ -55,6 +63,23 @@ public class atom {
 		int oldThatCharge = that.charge;
 		this.charge += that.charge;
 		that.charge = oldThatCharge + charge;
+	}
+	public void unBind(atom that){
+		bound = false;
+		that.bound = false;
+		
+		bindNumber--;
+		that.bindNumber--;
+		
+		boundAtoms.remove(that);
+		that.boundAtoms.remove(this);
+		
+		NumberOfValenceElectrons--;
+		that.NumberOfValenceElectrons--;
+		
+		int oldThatCharge = that.charge;
+		this.charge -= that.charge;
+		that.charge = oldThatCharge - charge;
 	}
 	
 	public boolean isBound() {
@@ -96,38 +121,58 @@ public class atom {
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
 	}
-
+	public int getzPos() {
+		return zPos;
+	}
+	public void setzPos(int zPos) {
+		this.zPos = zPos;
+	}
 	public void updateAtom(Simulator simulator){
-//		int min = Integer.MAX_VALUE;
-		boundAtomBehavior();
-		for(atom a : simulator.getAtoms()){
-			if(hasCollided(a)){
-				if(canBind(a)){
-					bind(a);	
-				}
-				else
-					moveAway(a);
-			}
-
-		}
-		if(bound){
-			if(moleculeBelowMinDist){
+		
+		CheckMoleculeMinMaxBorder();
+		
+		if(!moleculeBelowMinMaxDist){
+			
+			atom that = null;
+			int min = 10;
+			for(atom a : simulator.getAtoms()){
+				if(!boundAtoms.contains(a) && hasCollided(a)){
+					colition = true;
 				
+					if(canBind(a)){
+						bind(a);
+					}
+					else{
+						if(Calculations.senterAvstand(this, a) < min ){
+							min = Calculations.senterAvstand(this, a);
+							that = a;
+							}
+						}
+				}
+			}
+			if(!colition){
+				xPos = xPos +(random.nextInt(3)-1);
+				yPos = yPos +(random.nextInt(3)-1);
+				zPos = zPos +(random.nextInt(3)-1);
+			}
+			else if(that != null) moveAway(that);
+			
+			else{
+				xPos = xPos +(random.nextInt(3)-1);
+				yPos = yPos +(random.nextInt(3)-1);
+				zPos = zPos +(random.nextInt(3)-1);
 			}
 		}
-		else{
-			xPos = xPos +(random.nextInt(3)-1);
-			yPos = yPos +(random.nextInt(3)-1);
-			checkBorder();
-		}
-		moleculeBelowMinDist = false;
+		checkBorder();
+		moleculeBelowMinMaxDist = false;
+		colition = false;
 
 	}
 	public void checkBorder(){
 		if(xPos < 110){
 			xPos +=1;
 		}
-		else if(xPos > 490){
+		else if(xPos > 590){
 			xPos -=1;
 		}
 		else if(yPos < 110){
@@ -136,133 +181,111 @@ public class atom {
 		else if(xPos > 490){
 			yPos -=1;
 		}
+		else if(zPos < 110){
+			zPos +=1;
+		}
+		else if(zPos > 590){
+			zPos -=1;
+		}
+		
 	}
-	
-	public void boundAtomBehavior(){
-		int i = 0;
+
+	public void CheckMoleculeMinMaxBorder(){
+		
 		if(bound){
-			if(boundAtoms.size() == 1){
-				pairMoleculeBehavior(0);
+			int rangeMin = 0;
+			int rangeMax = 0;
+			int max = 100;
+			int min = 35;
+			atom thatMin = null;
+			atom thatMax = null;
+			for(atom a : boundAtoms){
+//				System.out.println(Calculations.senterAvstand(this, a));
+				if(Calculations.senterAvstand(this, a) < min){
+					min = Calculations.senterAvstand(this, a);
+					thatMin = a;
+					moleculeBelowMinMaxDist = true;
+				}
+				else if(Calculations.senterAvstand(this, a) > max){
+					max = Calculations.senterAvstand(this, a);
+					thatMax = a;
+					moleculeBelowMinMaxDist = true;
+				}
 			}
-			else if(boundAtoms.size() == 2){
-				tripletMoleculeBehavior();
-			}
-			else if(boundAtoms.size() == 3){
-				quadrupletMoleculeBehavior();
-			}
-			else if(boundAtoms.size() == 4){
-				pentupletMoleculeBehavior();
-			}
-			
-		}
-		
-	}
-	
-	
-	public void pairMoleculeBehavior(int numb){
-		//g = greater , l = less, xg = x is greater on this. 
-		atom that = boundAtoms.get(numb);
-//		System.out.println(Calculations.xRetning(this, that ));
-//		System.out.println(Calculations.yRetning(this, that));
-		boolean xg = Calculations.xRetning(this, that) > 13;
-		boolean xl = Calculations.xRetning(this, that) < -13;
-		boolean yl = Calculations.yRetning(this, that) > 13;
-		boolean yg = Calculations.yRetning(this, that) < -13;
-		//If they are the same place.
-		if (!xg && !xl && !yg && !yl) checkMoleculeBorder(that);
-		
-		else{
-			//This atom to the right
-			if(xg) 
-				xPos = xPos -1;
+			if(moleculeBelowMinMaxDist){
+				if(thatMin != null){
+//					System.out.println("min "+thatMin);
+					rangeMin = min;
+					if(thatMax != null){
+						rangeMax = max -100;
+						if(rangeMax > rangeMin)
+							moveTowards(thatMax);
+						else
+							moveAway(thatMin);
+						
+					}
+					else
+						moveAway(thatMin);
+				}
+				else if(thatMax != null){
+//					System.out.println("max "+thatMax);
+						moveTowards(thatMax);
+				}
 				
-			//This atom to the left of the other
-			else if(xl)
-				xPos = xPos + 1;
-				
-			else 
-				xPos = xPos +(random.nextInt(3)-1);
-				
-			//This atom over the other
-			if(yg)
-				yPos = yPos + 1;
-			
-			//This atom under the other
-			else if (yl)
-				yPos = yPos - 1;
-			
-			else	
-				yPos = yPos +(random.nextInt(3)-1);
 			}
-	}
-	public void tripletMoleculeBehavior(){
-		atom that0 = boundAtoms.get(0);
-		atom that1 = boundAtoms.get(1);
-		
-		int dist0 = Calculations.senterAvstand(this,that0);
-		int dist1 = Calculations.senterAvstand(this,that1);
-		
-		if(dist0 <= dist1) 
-			pairMoleculeBehavior(0);
-		else
-			pairMoleculeBehavior(1);
-	}
-	
-	public void quadrupletMoleculeBehavior(){
-		atom that0 = boundAtoms.get(0);
-		atom that1 = boundAtoms.get(1);
-		atom that2 = boundAtoms.get(2);
-		
-		int dist0 = Calculations.senterAvstand(this,that0);
-		int dist1 = Calculations.senterAvstand(this,that1);
-		int dist2 = Calculations.senterAvstand(this,that2);
-		if(dist0 <= dist1 && dist0 <= dist2) 
-			pairMoleculeBehavior(0);
-		else if(dist1 <= dist0 && dist1 <= dist2) 
-			pairMoleculeBehavior(1);
-		else
-			pairMoleculeBehavior(2);
-	}
-	public void pentupletMoleculeBehavior(){
-		atom that0 = boundAtoms.get(0);
-		atom that1 = boundAtoms.get(1);
-		atom that2 = boundAtoms.get(2);
-		atom that3 = boundAtoms.get(3);
-		
-		int dist0 = Calculations.senterAvstand(this,that0);
-		int dist1 = Calculations.senterAvstand(this,that1);
-		int dist2 = Calculations.senterAvstand(this,that2);
-		int dist3 = Calculations.senterAvstand(this,that3);
-		if(dist0 <= dist1 && dist0 <= dist2) 
-			pairMoleculeBehavior(0);
-		else if(dist1 <= dist0 && dist1 <= dist2) 
-			pairMoleculeBehavior(1);
-		else if(dist2 <= dist0 && dist2 <= dist1 && dist2 <= dist3) 
-			pairMoleculeBehavior(1);
-		else
-			pairMoleculeBehavior(3);
-	}
-	
-	public void checkMoleculeBorder(atom that){
-		if(Calculations.senterAvstand(this, that) < 5){
-			moveAway(that);
-			moleculeBelowMinDist = true;
-			}
-		else{
-			xPos = xPos +(random.nextInt(3)-1);
-			yPos = yPos +(random.nextInt(3)-1);
-//			System.out.println("molecule");
 		}
 	}
+	
 	public boolean hasCollided(atom that){
 		if(this == that) return false;
-		return Calculations.senterAvstand(this,that) < 13;
+		return Calculations.senterAvstand(this,that) <= 50;
 	}
 	public void moveAway(atom that){
-		xPos = xPos + (Calculations.xRetning(this, that));
-		yPos = yPos + (Calculations.yRetning(this, that));
+		boolean xg = Calculations.xRetning(this, that) > 0;
+		boolean yg = Calculations.yRetning(this, that) > 0;
+		boolean zg = Calculations.zRetning(this, that) > 0;
+	
+		if(xg)
+			xPos = xPos + 1;
+		else
+			xPos = xPos - 1;
+		if(yg)
+			yPos = yPos + 1;
+		else
+			yPos = yPos - 1;
+		if(zg)
+			zPos = zPos + 1;
+		else
+			zPos = zPos - 1;
+		
+	}
+	public void moveTowards(atom that){
+		boolean xg = Calculations.xRetning(this, that) > 0;
+		boolean yg = Calculations.yRetning(this, that) > 0;
+		boolean zg = Calculations.zRetning(this, that) > 0;
+		
+		if(xg)
+			xPos = xPos - 1;
+		else
+			xPos = xPos + 1;
+		if(yg)
+			yPos = yPos - 1;
+		else
+			yPos = yPos + 1;
+		if(zg)
+			zPos = zPos - 1;
+		else
+			zPos = zPos + 1;
+		
+	
 	}
 	
+	public int getVdwRadius() {
+		return vdwRadius;
+	}
+	public void setVdwRadius(int vdwRadius) {
+		this.vdwRadius = vdwRadius;
+	}
 	public ArrayList<atom> getBoundAtoms() {
 		return boundAtoms;
 	}
@@ -292,6 +315,12 @@ public class atom {
 
 	public void setBildeNavn(String bildeNavn) {
 		this.bildeNavn = bildeNavn;
+	}
+	public PhongMaterial getMaterialColor() {
+		return materialColor;
+	}
+	public void setMaterialColor(PhongMaterial materialColor) {
+		this.materialColor = materialColor;
 	}
 	
 }
