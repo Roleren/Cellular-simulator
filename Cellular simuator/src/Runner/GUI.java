@@ -11,6 +11,7 @@ import Atoms.Oxygen;
 import Atoms.Phosphorus;
 import Atoms.atom;
 import Molecules.CH4;
+import Molecules.H2O;
 import Molecules.Phosphate;
 import Molecules.Ribose;
 import javafx.animation.Animation;
@@ -87,12 +88,15 @@ public class GUI extends Application{
 		z_min = scale;
 		
 		System.out.println("This is a cell simualtion");
-	    possibleObjects = new ArrayList<atom>();
+	    //Atoms
+		possibleObjects = new ArrayList<atom>();
 		possibleObjects.add(new Carbon(0,0,0));
 		possibleObjects.add(new Hydrogen(0,0,0));
 		possibleObjects.add(new Oxygen(0,0,0));
 		possibleObjects.add(new Phosphorus(0,0,0));
 		possibleObjects.add(new Nitrogen(0,0,0));
+		//Molecules
+		possibleObjects.add(new H2O());
 		possibleObjects.add(new CH4());
 		possibleObjects.add(new Phosphate());
 		possibleObjects.add(new Ribose());
@@ -302,6 +306,14 @@ public class GUI extends Application{
 					simulator.atom.add(a);
 				}
 			}
+		else if(name.equals("H2O")){
+			
+			H2O h2o = new H2O();
+			ArrayList<atom> atoms = h2o.getAtomsOfMolecule();
+			for(atom a : atoms){
+				simulator.atom.add(a);
+			}
+		}
 	}
 	
 	public void rotateAroundYAxis(){

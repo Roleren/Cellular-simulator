@@ -16,6 +16,7 @@ public class Hydrogen extends atom {
 		covalentRadius = 31;
 		vdwRadius = 120;
 		NumberOfValenceElectrons = 1;
+		electronAffinity = 50;
 		setCharge(1);
 		this.xPos = xPos;
 		this.yPos = yPos;

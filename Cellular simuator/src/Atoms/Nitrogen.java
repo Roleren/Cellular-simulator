@@ -17,6 +17,7 @@ public class Nitrogen extends atom {
 		covalentRadius = 71;
 		vdwRadius = 155;
 		NumberOfValenceElectrons = 5;
+		electronAffinity = 5;
 		setCharge(+5);
 		this.xPos = xPos;
 		this.yPos = yPos;

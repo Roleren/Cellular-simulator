@@ -17,6 +17,7 @@ public class Oxygen extends atom {
 		covalentRadius = 66;
 		vdwRadius = 152;
 		NumberOfValenceElectrons = 6;
+		electronAffinity = 3;
 		setCharge(-2);
 		this.xPos = xPos;
 		this.yPos = yPos;

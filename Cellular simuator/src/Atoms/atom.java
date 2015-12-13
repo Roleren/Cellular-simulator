@@ -16,6 +16,8 @@ public class atom {
 	int covalentRadius;
 	int vdwRadius;
 	int NumberOfValenceElectrons;
+	int electronAffinity;
+	ArrayList<atom> affinityElectrons = new ArrayList<atom>(2);
 	private int charge;
 	Random random = new Random();
 	String bildeNavn;
@@ -155,7 +157,14 @@ public class atom {
 				yPos = yPos +(random.nextInt(3)-1);
 				zPos = zPos +(random.nextInt(3)-1);
 			}
-			else if(that != null) moveAway(that);
+			else if(that != null){
+				if(compareElectronAffinity(that)
+						&& this.isBound() && that.isBound() && !this.boundAtoms.contains(that)){
+					moveTowards(that);
+				}
+				else
+					moveAway(that);
+			}
 			
 			else{
 				xPos = xPos +(random.nextInt(3)-1);
@@ -163,6 +172,7 @@ public class atom {
 				zPos = zPos +(random.nextInt(3)-1);
 			}
 		}
+		ElectronAffinityAction();
 		checkBorder();
 		moleculeBelowMinMaxDist = false;
 		colition = false;
@@ -195,7 +205,7 @@ public class atom {
 		if(bound){
 			int rangeMin = 0;
 			int rangeMax = 0;
-			int max = 100;
+			int max = 70;
 			int min = 35;
 			atom thatMin = null;
 			atom thatMax = null;
@@ -282,6 +292,35 @@ public class atom {
 	
 	public int getVdwRadius() {
 		return vdwRadius;
+	}
+	public int getElectronAffinity() {
+		return electronAffinity;
+	}
+	public void setElectronAffinity(int electronAffinity) {
+		this.electronAffinity = electronAffinity;
+	}
+	public boolean compareElectronAffinity(atom that) {
+		if(this.electronAffinity - that.electronAffinity > 3){
+			if(this.affinityElectrons.size() < 2 &&  that.affinityElectrons.size() < 2){
+				this.affinityElectrons.add(that);
+				that.affinityElectrons.add(this);
+				return true;
+			}
+		}
+		return false;
+	}
+	public void ElectronAffinityAction() {
+		if(!affinityElectrons.isEmpty()){
+			atom currentAtom = null;
+			for(atom a: affinityElectrons){
+				if(random.nextInt(30) == 4){
+					currentAtom = a;
+				}
+			}
+			if(currentAtom != null)
+				affinityElectrons.remove(currentAtom);
+		}
+		
 	}
 	public void setVdwRadius(int vdwRadius) {
 		this.vdwRadius = vdwRadius;

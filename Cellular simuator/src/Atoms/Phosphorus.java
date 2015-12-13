@@ -17,6 +17,7 @@ public class Phosphorus extends atom {
 		covalentRadius = 107;
 		vdwRadius = 180;
 		NumberOfValenceElectrons = 6;
+		electronAffinity = 6;
 		setCharge(+5);
 		this.xPos = xPos;
 		this.yPos = yPos;
