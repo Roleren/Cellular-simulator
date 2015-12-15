@@ -64,6 +64,7 @@ public class GUI extends Application{
 	AnimationTimer timer;
 	PointLight light;
 	RotateTransition rotation;
+	MouseHandler mouseActions;
 
 	public GUI() {
 	}
@@ -83,7 +84,7 @@ public class GUI extends Application{
 		y_max = y-(scale*2);
 		y_min = scale;
 		//Innover
-		z = 700;
+		z = 800;
 		z_max = z-(scale*2);
 		z_min = scale;
 		
@@ -147,6 +148,7 @@ public class GUI extends Application{
 		
 		//start show
 		scene.setCamera(new PerspectiveCamera());
+		mouseActions = new MouseHandler(mainFrame);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		launchAnimation(gc);
@@ -326,5 +328,10 @@ public class GUI extends Application{
 		rotation.play();
 	}
 	
+	public void setXYZ(int a,int b, int c){
+		x = a;
+		y = b;
+		z = c;
+	}
 
 }

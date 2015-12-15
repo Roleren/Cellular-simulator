@@ -136,7 +136,7 @@ public class atom {
 		if(!moleculeBelowMinMaxDist){
 			
 			atom that = null;
-			int min = 10;
+			int min = 35;
 			for(atom a : simulator.getAtoms()){
 				if(!boundAtoms.contains(a) && hasCollided(a)){
 					colition = true;
@@ -180,22 +180,22 @@ public class atom {
 	}
 	public void checkBorder(){
 		if(xPos < 110){
-			xPos +=1;
+			xPos +=2;
 		}
 		else if(xPos > 590){
-			xPos -=1;
+			xPos -=2;
 		}
 		else if(yPos < 110){
-			yPos +=1;
+			yPos +=2;
 		}
-		else if(xPos > 490){
-			yPos -=1;
+		else if(yPos > 390){
+			yPos -=2;
 		}
 		else if(zPos < 110){
-			zPos +=1;
+			zPos +=2;
 		}
-		else if(zPos > 590){
-			zPos -=1;
+		else if(zPos > 490){
+			zPos -=2;
 		}
 		
 	}
@@ -225,9 +225,9 @@ public class atom {
 			if(moleculeBelowMinMaxDist){
 				if(thatMin != null){
 //					System.out.println("min "+thatMin);
-					rangeMin = min;
+					rangeMin = 35-min;
 					if(thatMax != null){
-						rangeMax = max -100;
+						rangeMax = max -70;
 						if(rangeMax > rangeMin)
 							moveTowards(thatMax);
 						else

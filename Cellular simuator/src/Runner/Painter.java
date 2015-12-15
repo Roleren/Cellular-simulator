@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -34,7 +35,7 @@ public class Painter extends Pane {
 		setBackGround("/Carbon.gif");
 		bond.setSpecularColor(Color.rgb(30, 30, 200));
 		bond.setDiffuseColor(Color.rgb(60, 60, 250));
-		
+//		setStyle("-fx-background-color: lightgrey; -fx-border-color: blue;");
 		
 		
 		
@@ -76,5 +77,10 @@ public class Painter extends Pane {
 	public Image getBackGround(){
 		return backGround;
 	}
+////	public void setScroll(){
+////		this.setOnScroll(new ScrollEvent
+////			
+////		}
+//	}
 	
 }
