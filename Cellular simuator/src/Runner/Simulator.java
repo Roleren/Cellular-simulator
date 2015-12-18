@@ -5,6 +5,8 @@ import java.util.Random;
 
 import Atoms.Carbon;
 import Atoms.Hydrogen;
+import Atoms.Nitrogen;
+import Atoms.Oxygen;
 import Atoms.atom;
 public class Simulator {
 	ArrayList<atom> atom = new ArrayList<atom>();
@@ -39,6 +41,8 @@ public class Simulator {
 		atom.add(new Hydrogen(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
 		atom.add(new Hydrogen(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
 		atom.add(new Hydrogen(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
+//		atom.add(new Nitrogen(300,300,300));
+//		atom.add(new Oxygen(310,310,310));
 		
 	}
 }

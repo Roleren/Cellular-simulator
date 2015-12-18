@@ -5,11 +5,9 @@ package Runner;
 import java.util.ArrayList;
 
 import Atoms.atom;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -22,11 +20,7 @@ public class Painter extends Pane {
 	ArrayList<atom> currentAtoms;
 	int scale = 10;
 	Image backGround;
-	PhongMaterial orange = new PhongMaterial();
-	PhongMaterial black = new PhongMaterial();
-	PhongMaterial red = new PhongMaterial();
-	PhongMaterial brown = new PhongMaterial();
-	PhongMaterial green = new PhongMaterial();
+	
 	PhongMaterial bond = new PhongMaterial();
 	
 	public Painter(Simulator simulator){
@@ -65,6 +59,12 @@ public class Painter extends Pane {
 					cylinder.setTranslateZ((a.getzPos()+currentAtom.getzPos())/2);
 					this.getChildren().add(cylinder);
 				}
+//				if(a.getCharName() == 'O'){
+//					Cylinder cylinder = new Cylinder(50/scale,100/scale);
+//					cylinder.setMaterial(bond);
+//					
+//					this.getChildren().add(cylinder);
+//				}
 			}
 		}
 	}

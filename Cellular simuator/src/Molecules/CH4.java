@@ -2,7 +2,7 @@ package Molecules;
 
 import Atoms.Carbon;
 import Atoms.Hydrogen;
-import Atoms.atom;
+import Atoms.Oxygen;
 
 public class CH4 extends Molecule {
 
@@ -28,6 +28,7 @@ public class CH4 extends Molecule {
 		carbon.bind(hydro2);
 		carbon.bind(hydro3);
 		carbon.bind(hydro4);
+		
 		
 	}
 

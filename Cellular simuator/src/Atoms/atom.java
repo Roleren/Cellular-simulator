@@ -25,6 +25,7 @@ public class atom {
 	
 
 	boolean bound = false;
+	static int scale = 10;
 	int bindNumber;
 	int maxBindNumber;
 	int xPos;
@@ -40,10 +41,11 @@ public class atom {
 	 */
 	public boolean canBind(atom that){
 		
-		if(this.getCharge() + that.getCharge() == 0 || 
+		if(!this.boundAtoms.contains(that) &&
+				(this.getCharge() + that.getCharge() == 0 || 
 				this.getCharge() + that.getCharge() > this.getCharge() ||
-				this.getCharge() - that.getCharge() == 0 ||
-				this.boundAtoms.contains(that)){
+				this.getCharge() - that.getCharge() == 0) 
+				){
 			if(bindNumber < maxBindNumber && that.bindNumber < that.maxBindNumber)
 				return true;
 		}
@@ -136,7 +138,8 @@ public class atom {
 		if(!moleculeBelowMinMaxDist){
 			
 			atom that = null;
-			int min = 35;
+			int min = (this.getVdwRadius())/scale;
+			
 			for(atom a : simulator.getAtoms()){
 				if(!boundAtoms.contains(a) && hasCollided(a)){
 					colition = true;
@@ -205,8 +208,8 @@ public class atom {
 		if(bound){
 			int rangeMin = 0;
 			int rangeMax = 0;
-			int max = 70;
-			int min = 35;
+			int max = (this.getVdwRadius()*2)/scale;
+			int min = (this.getVdwRadius())/scale;
 			atom thatMin = null;
 			atom thatMax = null;
 			for(atom a : boundAtoms){
@@ -225,9 +228,9 @@ public class atom {
 			if(moleculeBelowMinMaxDist){
 				if(thatMin != null){
 //					System.out.println("min "+thatMin);
-					rangeMin = 35-min;
+					rangeMin = ((this.getVdwRadius())/scale)-min;
 					if(thatMax != null){
-						rangeMax = max -70;
+						rangeMax = max -(this.getVdwRadius()*2)/scale;
 						if(rangeMax > rangeMin)
 							moveTowards(thatMax);
 						else
@@ -248,25 +251,29 @@ public class atom {
 	
 	public boolean hasCollided(atom that){
 		if(this == that) return false;
-		return Calculations.senterAvstand(this,that) <= 50;
+		return Calculations.senterAvstand(this,that) <= (this.getVdwRadius()+that.getVdwRadius())/scale;
 	}
 	public void moveAway(atom that){
 		boolean xg = Calculations.xRetning(this, that) > 0;
 		boolean yg = Calculations.yRetning(this, that) > 0;
 		boolean zg = Calculations.zRetning(this, that) > 0;
-	
-		if(xg)
-			xPos = xPos + 1;
-		else
-			xPos = xPos - 1;
-		if(yg)
-			yPos = yPos + 1;
-		else
-			yPos = yPos - 1;
-		if(zg)
-			zPos = zPos + 1;
-		else
-			zPos = zPos - 1;
+		if(that.bindNumber <= 1){
+			if(xg)
+				xPos = xPos + 1;
+			else
+				xPos = xPos - 1;
+			if(yg)
+				yPos = yPos + 1;
+			else
+				yPos = yPos - 1;
+			if(zg)
+				zPos = zPos + 1;
+			else
+				zPos = zPos - 1;
+		}
+		else{
+			
+		}
 		
 	}
 	public void moveTowards(atom that){

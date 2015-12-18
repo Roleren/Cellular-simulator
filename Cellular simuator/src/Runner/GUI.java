@@ -11,6 +11,7 @@ import Atoms.Oxygen;
 import Atoms.Phosphorus;
 import Atoms.atom;
 import Molecules.CH4;
+import Molecules.CO2;
 import Molecules.H2O;
 import Molecules.Phosphate;
 import Molecules.Ribose;
@@ -98,6 +99,7 @@ public class GUI extends Application{
 		possibleObjects.add(new Nitrogen(0,0,0));
 		//Molecules
 		possibleObjects.add(new H2O());
+		possibleObjects.add(new CO2());
 		possibleObjects.add(new CH4());
 		possibleObjects.add(new Phosphate());
 		possibleObjects.add(new Ribose());
@@ -316,6 +318,14 @@ public class GUI extends Application{
 				simulator.atom.add(a);
 			}
 		}
+		else if(name.equals("CO2")){
+					
+				CO2 co2 = new CO2();
+				ArrayList<atom> atoms = co2.getAtomsOfMolecule();
+				for(atom a : atoms){
+					simulator.atom.add(a);
+				}
+			}
 	}
 	
 	public void rotateAroundYAxis(){
