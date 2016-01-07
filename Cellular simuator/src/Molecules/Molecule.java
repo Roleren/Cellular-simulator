@@ -12,9 +12,10 @@ public class Molecule extends atom {
 	int totalCharge;
 	int totalWeight;
 	Random random = new Random();
-	int rx;
-	int ry;
-	int rz;
+	//startPosition
+	int rx = random.nextInt(350)+106;
+	int ry = random.nextInt(150)+106;
+	int rz = random.nextInt(350)+106;
 	
 	public void addAtom(atom that){
 		atoms.add(that);

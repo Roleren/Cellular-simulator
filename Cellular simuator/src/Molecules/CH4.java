@@ -2,21 +2,18 @@ package Molecules;
 
 import Atoms.Carbon;
 import Atoms.Hydrogen;
-import Atoms.Oxygen;
 
 public class CH4 extends Molecule {
 
 	
 	public CH4() {
 		name = "CH4";
-		rx = random.nextInt(400)+106;
-		ry = random.nextInt(400)+106;
-		rz = random.nextInt(400)+106;
+		
 		Carbon carbon = new Carbon(rx,ry,rz);
-		Hydrogen hydro1 = new Hydrogen(rx+5,ry+5,rz+5);
-		Hydrogen hydro2 = new Hydrogen(rx-5,ry+5,rz-5);
-		Hydrogen hydro3 = new Hydrogen(rx+5,ry-5,rz+5);
-		Hydrogen hydro4 = new Hydrogen(rx-5,ry-5,rz-5);
+		Hydrogen hydro1 = new Hydrogen(rx+11,ry+11,rz+11);
+		Hydrogen hydro2 = new Hydrogen(rx-11,ry+11,rz-11);
+		Hydrogen hydro3 = new Hydrogen(rx+11,ry-11,rz+11);
+		Hydrogen hydro4 = new Hydrogen(rx-11,ry-11,rz-11);
 		
 		atoms.add(carbon);
 		atoms.add(hydro1);

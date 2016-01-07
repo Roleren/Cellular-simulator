@@ -3,38 +3,36 @@ package Molecules;
 import Atoms.Carbon;
 import Atoms.Hydrogen;
 import Atoms.Oxygen;
-import Atoms.atom;
+
 
 public class Ribose extends Molecule {
 
 	
 	public Ribose() {
 		name = "ribose";
-		rx = random.nextInt(400)+106;
-		ry = random.nextInt(400)+106;
-		rz = random.nextInt(400)+106;
+		
 		Carbon carbon1 = new Carbon(rx,ry,rz);
-		Carbon carbon2 = new Carbon(rx-10,ry,rz-10);
-		Carbon carbon3 = new Carbon(rx-20,ry,rz-10);
-		Carbon carbon4 = new Carbon(rx-30,ry,rz);
-		Carbon carbon5 = new Carbon(rx-30,ry-10,rz);
+		Carbon carbon2 = new Carbon(rx-15,ry,rz-15);
+		Carbon carbon3 = new Carbon(rx-30,ry,rz-30);
+		Carbon carbon4 = new Carbon(rx-45,ry,rz);
+		Carbon carbon5 = new Carbon(rx-45,ry-15,rz);
 		
-		Hydrogen hydro1 = new Hydrogen(rx,ry+5,rz);
-		Hydrogen hydro2 = new Hydrogen(rx,ry-10,rz);
-		Hydrogen hydro3 = new Hydrogen(rx-10,ry-10,rz-10);
-		Hydrogen hydro4 = new Hydrogen(rx-10,ry+10,rz-10);
-		Hydrogen hydro5 = new Hydrogen(rx-20,ry-5,rz-10);
-		Hydrogen hydro6 = new Hydrogen(rx-20,ry+10,rz-10);
-		Hydrogen hydro7 = new Hydrogen(rx-30,ry+5,rz);
-		Hydrogen hydro8 = new Hydrogen(rx-25,ry-10,rz-5);
-		Hydrogen hydro9 = new Hydrogen(rx-25,ry-10,rz+5);
-		Hydrogen hydro10= new Hydrogen(rx-40,ry-5,rz-5);
+		Hydrogen hydro1 = new Hydrogen(rx,ry+12,rz);
+		Hydrogen hydro2 = new Hydrogen(rx,ry-24,rz);
+		Hydrogen hydro3 = new Hydrogen(rx-24,ry-24,rz-24);
+		Hydrogen hydro4 = new Hydrogen(rx-24,ry+24,rz-24);
+		Hydrogen hydro5 = new Hydrogen(rx-36,ry-12,rz-24);
+		Hydrogen hydro6 = new Hydrogen(rx-48,ry+24,rz-24);
+		Hydrogen hydro7 = new Hydrogen(rx-72,ry+12,rz);
+		Hydrogen hydro8 = new Hydrogen(rx-60,ry-24,rz-12);
+		Hydrogen hydro9 = new Hydrogen(rx-60,ry-24,rz+12);
+		Hydrogen hydro10= new Hydrogen(rx-96,ry-12,rz-12);
 		
-		Oxygen oxygen1 = new Oxygen(rx,ry-5,rz);
-		Oxygen oxygen2 = new Oxygen(rx-15,ry-5,rz+5);
-		Oxygen oxygen3 = new Oxygen(rx-10,ry+5,rz-10);
-		Oxygen oxygen4 = new Oxygen(rx-20,ry+5,rz-5);
-		Oxygen oxygen5 = new Oxygen(rx-35,ry-5,rz);
+		Oxygen oxygen1 = new Oxygen(rx,ry-15,rz);
+		Oxygen oxygen2 = new Oxygen(rx-45,ry-15,rz+15);
+		Oxygen oxygen3 = new Oxygen(rx-30,ry+15,rz-30);
+		Oxygen oxygen4 = new Oxygen(rx-60,ry+15,rz-15);
+		Oxygen oxygen5 = new Oxygen(rx-105,ry-15,rz);
 		
 		atoms.add(carbon1);
 		atoms.add(carbon2);

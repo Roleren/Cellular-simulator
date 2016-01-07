@@ -16,13 +16,13 @@ public class Phosphorus extends atom {
 		setWeight(isotope);
 		covalentRadius = 107;
 		vdwRadius = 180;
-		NumberOfValenceElectrons = 6;
+		setNumberOfValenceElectrons(6);
 		electronAffinity = 6;
 		setCharge(+5);
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.zPos = zPos;
-		maxBindNumber = 5;
+		setMaxBindNumber(5);
 	}
 	
 	

@@ -18,14 +18,14 @@ public class Carbon extends atom {
 		setWeight(isotope);
 		covalentRadius = 73;
 		vdwRadius = 170;
-		NumberOfValenceElectrons = 4;
+		setNumberOfValenceElectrons(4);
 		electronAffinity = 7;
 		
 		setCharge(4);
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.zPos = zPos;
-		maxBindNumber = 4;
+		setMaxBindNumber(4);
 	}
 	
 	

@@ -3,17 +3,22 @@ package Math;
 import Atoms.atom;
 
 public class Calculations {
-	int x, y,z;
 	/**
 	 * Euclidean distance
 	 * @param one
 	 * @param two
+	 * gives parameters with get(x,y,z)
 	 * @return
 	 */
 	public static int senterAvstand(atom one, atom two){
 		return (int) Math.sqrt(Math.pow(one.getxPos()-two.getxPos(),2)
 						+Math.pow(one.getyPos()-two.getyPos(),2)
-								+Math.pow(one.getyPos()-two.getyPos(),2));
+								+Math.pow(one.getzPos()-two.getzPos(),2));
+	}
+	public static double senterAvstandDouble(atom one, atom two){
+		return  Math.sqrt(Math.pow(one.getxPos()-two.getxPos(),2)
+						+Math.pow(one.getyPos()-two.getyPos(),2)
+								+Math.pow(one.getzPos()-two.getzPos(),2));
 	}
 	public static int xRetning(atom one, atom two){
 		int xr = (one.getxPos()-two.getxPos());

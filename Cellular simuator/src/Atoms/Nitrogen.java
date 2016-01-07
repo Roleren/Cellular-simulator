@@ -16,13 +16,13 @@ public class Nitrogen extends atom {
 		setWeight(isotope);
 		covalentRadius = 71;
 		vdwRadius = 155;
-		NumberOfValenceElectrons = 5;
+		setNumberOfValenceElectrons(5);
 		electronAffinity = 5;
 		setCharge(+5);
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.zPos = zPos;
-		maxBindNumber = 3;
+		setMaxBindNumber(3);
 	}
 	
 	

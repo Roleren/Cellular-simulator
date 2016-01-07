@@ -10,9 +10,13 @@ import Atoms.Nitrogen;
 import Atoms.Oxygen;
 import Atoms.Phosphorus;
 import Atoms.atom;
+import Math.CellGrid;
+import MolecularEnvironments.Water;
+import Molecules.Adenine;
 import Molecules.CH4;
 import Molecules.CO2;
 import Molecules.H2O;
+import Molecules.Molecule;
 import Molecules.Phosphate;
 import Molecules.Ribose;
 import javafx.animation.Animation;
@@ -58,15 +62,18 @@ public class GUI extends Application{
 	//Objects
 	static ArrayList<atom> possibleObjects;
 	static Simulator simulator;
+	//Scene objects
 	Painter mainFrame;
 	Pane creations, statusBar;
 	Button restart, pause,rotate, exit;
-//	Timeline timer;
+//	Light, timer, mousehandler
 	AnimationTimer timer;
 	PointLight light;
 	RotateTransition rotation;
 	MouseHandler mouseActions;
-
+	//Cell lists for optimization
+	int numberOfcellLists;
+	CellGrid cellGrid;
 	public GUI() {
 	}
 	
@@ -76,6 +83,14 @@ public class GUI extends Application{
 	 * @see javafx.application.Application#init()
 	 */
 	public void init(){
+		
+//		System.out.println((200+150+250)/50);
+//		try {
+//			Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		//Bredde
 		x = 800;
 		x_max = x-(scale*2);
@@ -88,8 +103,10 @@ public class GUI extends Application{
 		z = 800;
 		z_max = z-(scale*2);
 		z_min = scale;
-		
+		//Cell lists for optimization
+		cellGrid = new CellGrid(x_max-x_min,y_max-y_min,z_max-z_min);
 		System.out.println("This is a cell simualtion");
+		
 	    //Atoms
 		possibleObjects = new ArrayList<atom>();
 		possibleObjects.add(new Carbon(0,0,0));
@@ -103,9 +120,11 @@ public class GUI extends Application{
 		possibleObjects.add(new CH4());
 		possibleObjects.add(new Phosphate());
 		possibleObjects.add(new Ribose());
+		possibleObjects.add(new Adenine());
+		//Environments
+		possibleObjects.add(new Water());
 		
-//		simulator = new Simulator(x_max,y_max,z_max,x_min,y_min,z_min);
-		simulator = new Simulator();
+		simulator = new Simulator(cellGrid);
 		step = 0;
 	}
 	
@@ -149,8 +168,9 @@ public class GUI extends Application{
 		root.getChildren().add(light);
 		
 		//start show
-		scene.setCamera(new PerspectiveCamera());
-		mouseActions = new MouseHandler(mainFrame);
+		Cam cam = new Cam(mainFrame);
+		scene.setCamera(cam);
+		mouseActions = new MouseHandler(mainFrame,cam);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		launchAnimation(gc);
@@ -161,9 +181,13 @@ public class GUI extends Application{
 
 			@Override
 			public void handle(long arg0) {
+//				System.out.println("1");
 				simulator.objectExecutor();
-				mainFrame.getChildren().clear();
+//				System.out.println("2");
+				cellGrid.updateCellGrid(simulator);
+//				System.out.println("3");
 				mainFrame.paint();
+//				System.out.println("4");
 				step++;
 			}
 			
@@ -240,50 +264,48 @@ public class GUI extends Application{
 		border.setLeft(grid1);
 	}
 	
-	public static void main(String[] args) {
-		Application.launch();
-	}
+	
 	
 	public void createAtom(atom currentAtom){
 		String name = currentAtom.toString();
 		if(name.equals("hydrogen")){
 			
 			Hydrogen hydrogen = new Hydrogen
-					(random.nextInt(x_max- x_min)+x_min,
-							random.nextInt(y_max-y_min)+ y_min,
-								random.nextInt(z_max-z_min)+ z_min);
+					(random.nextInt(350)+106,
+							random.nextInt(150)+ 106,
+								random.nextInt(350)+106);
 			simulator.atom.add(hydrogen);
 		}
 		else if(name.equals("carbon")){
 			
 			Carbon carbon = new Carbon
-					(random.nextInt(x_max- x_min)+x_min,
-							random.nextInt(y_max-y_min)+ y_min,
-								random.nextInt(z_max-z_min)+ z_min);
+					(random.nextInt(350)+106,
+							random.nextInt(150)+ 106,
+								random.nextInt(350)+106);
 			simulator.atom.add(carbon);
 		}
 		else if(name.equals("oxygen")){
 			
 			Oxygen oxygen = new Oxygen
-					(random.nextInt(x_max- x_min)+x_min,
-							random.nextInt(y_max-y_min)+ y_min,
-								random.nextInt(z_max-z_min)+ z_min);
+					(random.nextInt(350)+106,
+							random.nextInt(150)+ 106,
+								random.nextInt(350)+106);
 			simulator.atom.add(oxygen);
 		}
 		else if(name.equals("phosphorus")){
 		
 			Phosphorus phosporus = new Phosphorus
-					(random.nextInt(x_max- x_min)+x_min,
-							random.nextInt(y_max-y_min)+ y_min,
-								random.nextInt(z_max-z_min)+ z_min);
+					(random.nextInt(350)+106,
+							random.nextInt(150)+ 106,
+								random.nextInt(350)+106);
 			simulator.atom.add(phosporus);
 		}
 		else if(name.equals("nitrogen")){
 			
 			Nitrogen nitrogen = new Nitrogen
-					(random.nextInt(x_max- x_min)+x_min,
-							random.nextInt(y_max-y_min)+ y_min,
-								random.nextInt(z_max-z_min)+ z_min);
+					(random.nextInt(350)+106,
+							random.nextInt(150)+ 106,
+								random.nextInt(350)+106);
 			simulator.atom.add(nitrogen);
 		}
 		else if(name.equals("CH4")){
@@ -326,6 +348,24 @@ public class GUI extends Application{
 					simulator.atom.add(a);
 				}
 			}
+		else if(name.equals("Adenine")){
+			
+			Adenine adenine = new Adenine();
+			ArrayList<atom> atoms = adenine.getAtomsOfMolecule();
+			for(atom a : atoms){
+				simulator.atom.add(a);
+			}
+		}
+		else if(name.equals("water")){
+			
+			Water water = new Water();
+			ArrayList<Molecule> molecules = water.createWater();
+			for(Molecule a : molecules){
+				for(atom b : a.getAtomsOfMolecule()){
+					simulator.atom.add(b);
+				}
+			}
+		}
 	}
 	
 	public void rotateAroundYAxis(){
@@ -342,6 +382,10 @@ public class GUI extends Application{
 		x = a;
 		y = b;
 		z = c;
+	}
+	
+	public static void main(String[] args) {
+		Application.launch();
 	}
 
 }
