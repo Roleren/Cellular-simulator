@@ -3,6 +3,7 @@ package Runner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,7 +16,7 @@ import Atoms.Oxygen;
 import Atoms.atom;
 import Math.CellGrid;
 public class Simulator {
-	ArrayList<atom> atom = new ArrayList<atom>();
+	CopyOnWriteArrayList<atom> atom = new CopyOnWriteArrayList<atom>();
 	Random random = new Random();
 	
 	CellGrid cellGrid;
@@ -30,7 +31,7 @@ public class Simulator {
 	
 	List<Future<Runnable>> futures = new ArrayList<Future<Runnable>>();
 	Simulator This;
-	public Simulator(CellGrid cellGrid){
+	public  Simulator(CellGrid cellGrid){
 		This = this;
 		this.cellGrid = cellGrid;
 		gridOranizer();
@@ -56,14 +57,14 @@ public class Simulator {
 //		}
 	}
 	
-	public ArrayList<Atoms.atom> getAtoms(){
+	public CopyOnWriteArrayList<Atoms.atom> getAtoms(){
 		return atom;
 	}
 	public CellGrid getCellGrid() {
 		return cellGrid;
 	}
 	public void restart(int xMax,int yMax,int zMax, int xMin,int yMin,int zMin ){
-		atom = new ArrayList<atom>();
+		atom = new CopyOnWriteArrayList<atom>();
 		System.out.println(atom.size());
 		testStart(xMax,yMax,zMax, xMin,yMin, zMin);
 	}

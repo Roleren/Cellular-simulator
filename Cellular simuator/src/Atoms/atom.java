@@ -37,10 +37,10 @@ public class atom {
 	int yPos;
 	int zPos;
 
-	int lastXPos;
-	int lastYPos;
-	int lastZPos;
-	int dv;
+	private int lastXPos;
+	private int lastYPos;
+	private int lastZPos;
+	private int dv;
 	
 	
 	//Booleans
@@ -161,12 +161,12 @@ public class atom {
 				moveRandomly();
 			}
 		}
-		ElectronAffinityAction();
+//		ElectronAffinityAction();
 		checkBorder();
 		moleculeBelowMinMaxDist = false;
 		colition = false;
 	}
-	private void updateOldPositions() {
+	public void updateOldPositions() {
 		lastXPos = xPos;
 		lastYPos = yPos;
 		lastZPos = zPos;
