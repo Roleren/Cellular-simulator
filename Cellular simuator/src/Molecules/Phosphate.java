@@ -5,6 +5,7 @@ import Atoms.Phosphorus;
 public class Phosphate extends Molecule {
 
 	public Phosphate() {
+		type = "molecule";
 		name = "phosphate";
 		
 	

@@ -14,7 +14,7 @@ public class Nitrogen extends atom {
 		materialColor.setSpecularColor(Color.rgb(0, 180, 0));
 		materialColor.setDiffuseColor(Color.rgb(0, 200, 0));
 		setWeight(isotope);
-		covalentRadius = 71;
+		setCovalentRadius(71);
 		vdwRadius = 155;
 		setNumberOfValenceElectrons(5);
 		electronAffinity = 5;

@@ -23,7 +23,7 @@ import javafx.scene.shape.Sphere;
 public class Painter extends Pane {
 	GraphicsContext gc;
 	Simulator simulator;
-	int scale = 10;
+	private int scale = 10;
 	Image backGround;
 	//material for drawings
 	PhongMaterial bond = new PhongMaterial();
@@ -46,7 +46,7 @@ public class Painter extends Pane {
 	public Painter(Simulator simulator){
 		super();
 		this.simulator = simulator;
-		setBackGround("/Carbon.gif");
+		
 		bond.setSpecularColor(Color.rgb(30, 30, 200));
 		bond.setDiffuseColor(Color.rgb(60, 60, 250));
 		
@@ -138,7 +138,7 @@ public class Painter extends Pane {
 		getChildren().clear();
 		for(atom a : currentAtoms ){
 
-			Sphere sphere = new Sphere(a.getVdwRadius()/(scale));
+			Sphere sphere = new Sphere(a.getVdwRadius()/(getScale()));
 			sphere.setMaterial(a.getMaterialColor());
 			sphere.setTranslateX(a.getxPos());
 			sphere.setTranslateY(a.getyPos());
@@ -148,7 +148,7 @@ public class Painter extends Pane {
 			if(a.isBound()){
 				//Covalent bonds
 				for(atom currentAtom : a.getBoundAtoms()){
-					Cylinder cylinder = new Cylinder(50/scale,100/scale);
+					Cylinder cylinder = new Cylinder(50/getScale(),100/getScale());
 					cylinder.setMaterial(bond);
 					cylinder.setTranslateX((a.getxPos()+currentAtom.getxPos())/2);
 					cylinder.setTranslateY((a.getyPos()+currentAtom.getyPos())/2);
@@ -158,7 +158,7 @@ public class Painter extends Pane {
 				//HydrogenBonds
 				if(!a.getAffinityElectrons().isEmpty()){
 					for(atom b : a.getAffinityElectrons() ){
-						Cylinder cylinder = new Cylinder(50/scale,100/scale);
+						Cylinder cylinder = new Cylinder(50/getScale(),100/getScale());
 						cylinder.setMaterial(hydrogenBond);
 						cylinder.setTranslateX((a.getxPos()+b.getxPos())/2);
 						cylinder.setTranslateY((a.getyPos()+b.getyPos())/2);
@@ -180,7 +180,7 @@ public class Painter extends Pane {
 		for(ArrayList<atom> currentAtoms : currentList){
 			for(atom a : currentAtoms ){
 	
-				Sphere sphere = new Sphere(a.getVdwRadius()/(scale));
+				Sphere sphere = new Sphere(a.getVdwRadius()/(getScale()));
 				sphere.setMaterial(a.getMaterialColor());
 				sphere.setTranslateX(a.getxPos());
 				sphere.setTranslateY(a.getyPos());
@@ -190,7 +190,7 @@ public class Painter extends Pane {
 				if(a.isBound()){
 					//Covalent bonds
 					for(atom currentAtom : a.getBoundAtoms()){
-						Cylinder cylinder = new Cylinder(50/scale,100/scale);
+						Cylinder cylinder = new Cylinder(50/getScale(),100/getScale());
 						cylinder.setMaterial(bond);
 						cylinder.setTranslateX((a.getxPos()+currentAtom.getxPos())/2);
 						cylinder.setTranslateY((a.getyPos()+currentAtom.getyPos())/2);
@@ -200,7 +200,7 @@ public class Painter extends Pane {
 					//HydrogenBonds
 					if(!a.getAffinityElectrons().isEmpty()){
 						for(atom b : a.getAffinityElectrons() ){
-							Cylinder cylinder = new Cylinder(50/scale,100/scale);
+							Cylinder cylinder = new Cylinder(50/getScale(),100/getScale());
 							cylinder.setMaterial(hydrogenBond);
 							cylinder.setTranslateX((a.getxPos()+b.getxPos())/2);
 							cylinder.setTranslateY((a.getyPos()+b.getyPos())/2);
@@ -237,6 +237,14 @@ public class Painter extends Pane {
 			this.getChildren().addAll(list3);
 		if(list4 != null)
 			this.getChildren().addAll(list4);
+	}
+
+	public int getScale() {
+		return scale;
+	}
+
+	public void setScale(int scale) {
+		this.scale = scale;
 	}
 	
 ////	public void setScroll(){

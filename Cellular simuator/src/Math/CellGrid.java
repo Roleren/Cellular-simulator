@@ -17,9 +17,7 @@ public class CellGrid {
 	static int d = 50;
 	
 	public CellGrid(int x, int y, int z){
-//		System.out.println(x+" "+y+" "+z);
 		numberOfcellLists = (x+y+z)/d;
-//		System.out.println(numberOfcellLists);
 		cellLists = new ArrayList<ArrayList<atom>>(numberOfcellLists);
 		for(int i = 0; i<numberOfcellLists; i++){
 			cellLists.add(new ArrayList<atom>(30));
@@ -32,7 +30,7 @@ public class CellGrid {
 			System.out.println("Simulator size: "+ simulator.getAtoms().size());
 			System.out.println((a.getxPos()+a.getyPos()+a.getzPos())/d);
 			System.out.println(a.getxPos()+" "+a.getyPos()+" "+a.getzPos());
-//			cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d).remove(a);
+
 			if(!cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d).remove(a)){
 				System.out.println("Remove error");
 				cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d).remove(a);

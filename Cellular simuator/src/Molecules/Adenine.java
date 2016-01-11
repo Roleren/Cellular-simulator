@@ -8,6 +8,7 @@ public class Adenine extends Molecule {
 
 	
 	public Adenine() {
+		type = "molecule";
 		name = "Adenine";
 		
 		//Main rings

@@ -13,7 +13,7 @@ public class Hydrogen extends atom {
 		materialColor.setSpecularColor(Color.rgb(200, 130, 77));
 		materialColor.setDiffuseColor(Color.rgb(250, 130, 77));
 		setWeight(isotope);
-		covalentRadius = 31;
+		setCovalentRadius(31);
 		vdwRadius = 120;
 		setNumberOfValenceElectrons(1);
 		electronAffinity = 50;

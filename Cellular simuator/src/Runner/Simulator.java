@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import AtomInteractions.AtomActions;
 import Atoms.Carbon;
 import Atoms.Hydrogen;
 import Atoms.Nitrogen;
@@ -16,7 +17,7 @@ import Atoms.Oxygen;
 import Atoms.atom;
 import Math.CellGrid;
 public class Simulator {
-	CopyOnWriteArrayList<atom> atom = new CopyOnWriteArrayList<atom>();
+	public CopyOnWriteArrayList<atom> atom = new CopyOnWriteArrayList<atom>();
 	Random random = new Random();
 	
 	CellGrid cellGrid;
@@ -144,7 +145,7 @@ public class Simulator {
 			for(atom currentAtom : currentList){
 //				System.out.println(currentAtom);
 				i++;
-				currentAtom.updateAtom(This);
+				AtomActions.Action(currentAtom, this);
 			}
 		}
 		System.out.println("i is: "+i);

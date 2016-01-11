@@ -9,6 +9,7 @@ public class Ribose extends Molecule {
 
 	
 	public Ribose() {
+		type = "molecule";
 		name = "ribose";
 		
 		Carbon carbon1 = new Carbon(rx,ry,rz);

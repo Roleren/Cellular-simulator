@@ -7,7 +7,9 @@ import Molecules.Molecule;
 
 public class Water extends Molecule {
 	ArrayList<Molecule> molecules;
+	
 	public Water(){
+		type = "molecular environment";
 		name = "water";
 		molecules = new ArrayList<Molecule>(100);
 	}

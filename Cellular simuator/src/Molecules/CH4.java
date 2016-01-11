@@ -7,6 +7,7 @@ public class CH4 extends Molecule {
 
 	
 	public CH4() {
+		type = "molecule";
 		name = "CH4";
 		
 		Carbon carbon = new Carbon(rx,ry,rz);

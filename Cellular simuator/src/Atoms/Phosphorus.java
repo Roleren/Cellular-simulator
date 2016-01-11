@@ -14,7 +14,7 @@ public class Phosphorus extends atom {
 		materialColor.setSpecularColor(Color.rgb(100, 80, 50));
 		materialColor.setDiffuseColor(Color.rgb(150, 100, 70));
 		setWeight(isotope);
-		covalentRadius = 107;
+		setCovalentRadius(107);
 		vdwRadius = 180;
 		setNumberOfValenceElectrons(6);
 		electronAffinity = 6;

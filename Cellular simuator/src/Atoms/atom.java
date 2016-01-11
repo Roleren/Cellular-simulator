@@ -1,27 +1,29 @@
 package Atoms;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import LowerObjects.Bond;
 import Math.Calculations;
-import Runner.Simulator;
 import javafx.scene.paint.PhongMaterial;
 
 public class atom {
 	//Standard constants
 	int isotope;
-	protected String name;
-	char charName;
-	String color;
 	int weight;
-	int covalentRadius;
+	private int covalentRadius;
 	int vdwRadius;
-	static int scale = 10;
 	int electronAffinity;
+	public String type = "atom";
+	private static int scale = 10;
 	//divisor for scale
-	static int d = 40*40*40;
 	
+	
+	char charName;
+	
+	
+	String color;
+	protected String name;
+
 	//Arraylists for bound and affinity electrons
 	private ArrayList<atom> affinityElectrons = new ArrayList<atom>(2);
 	ArrayList<atom> boundAtoms = new ArrayList<atom>();
@@ -40,14 +42,14 @@ public class atom {
 	private int lastXPos;
 	private int lastYPos;
 	private int lastZPos;
-	private int dv;
+//	private int dv;
 	
 	
 	//Booleans
 	boolean moleculeBelowMinMaxDist = false;
-	boolean colition = false;
+	private boolean colition = false;
 	//Extra objects
-	Random random = new Random();
+	
 	PhongMaterial materialColor;
 	
 	
@@ -109,63 +111,8 @@ public class atom {
 	public void setzPos(int zPos) {
 		this.zPos = zPos;
 	}
-	public void updateAtom(Simulator simulator){
-		updateOldPositions();
-		CheckMoleculeMinMaxBorder();
+	
 		
-		if(!moleculeBelowMinMaxDist){
-			
-			atom that = null;
-			double min = 100000000;
-			//Checks each atom in this atoms cell list
-//			System.out.println(getxPos()+" "+getyPos()+" "+getzPos());
-			for(atom a : simulator.getCellGrid().getCellLists().
-					get((getxPos()+getyPos()+getzPos())/d)){
-				if(!boundAtoms.contains(a) && hasCollided(a)){
-					colition = true;
-				
-					if(canBind(a)){
-						bind(a);
-						System.out.println("bind");
-					}
-					else{
-						if(Calculations.senterAvstandDouble(this, a)/
-								((this.vdwRadius+a.getVdwRadius())/scale) < min &&
-								Calculations.senterAvstandDouble(this, a) <
-									((this.vdwRadius+a.getVdwRadius()))/scale){
-							min = Calculations.senterAvstandDouble(this, a)/((this.vdwRadius+a.getVdwRadius())/scale);
-							that = a;
-							}
-						}
-				}
-			}
-			if(!colition){
-//				System.out.println("Random");
-				moveRandomly();
-			}
-			else if(that != null){
-				if(!this.boundAtoms.contains(that)
-						&& this.isBound() && that.isBound() && compareElectronAffinity(that)){
-					System.out.println("bind");
-					bind(that);
-				}
-				
-				else {
-//					System.out.println("Colition away");
-					moveAway(that);
-				}
-			}
-			
-			else{
-//				System.out.println("With colition Random");
-				moveRandomly();
-			}
-		}
-//		ElectronAffinityAction();
-		checkBorder();
-		moleculeBelowMinMaxDist = false;
-		colition = false;
-	}
 	public void updateOldPositions() {
 		lastXPos = xPos;
 		lastYPos = yPos;
@@ -192,119 +139,14 @@ public class atom {
 		}
 		
 	}
-	/**
-	 * Behavior for atoms that are bound and the distance between two atoms
-	 * in the bound atom is less or greater than min/max.
-	 **/
-	public void CheckMoleculeMinMaxBorder(){
-		
-		if(isBound()){
-			double rangeMin = 0;
-			double rangeMax = 0;
-			double max = 0;
-			double min = 100000000;
-			atom thatMin = null;
-			atom thatMax = null;
-			for(atom a : boundAtoms){
-				double currentDistance = Calculations.senterAvstandDouble(this, a);
-				double covalentDistance = (this.covalentRadius+a.covalentRadius)/scale;
-//				System.out.println("atom størrelse: "+this.vdwRadius/scale);
-//				System.out.println("Faktisk avstand: "+Calculations.senterAvstand(this, a));
-//				System.out.println("Minimum avstand: "+(int)((this.covalentRadius+a.covalentRadius)/1.2)/scale);
-//				System.out.println("Maximum avstand: "+(int)((this.covalentRadius+a.covalentRadius)*1.2)/scale);
-				if(currentDistance/
-						(covalentDistance) < min &&
-						currentDistance <
-							((this.covalentRadius+a.covalentRadius)/1.2)/scale){
-					//Check which ratio is least, of all.
-					min = currentDistance/covalentDistance;
-					thatMin = a;
-					moleculeBelowMinMaxDist = true;
-				}
-				else if(currentDistance/
-						covalentDistance > max && 
-						currentDistance > 
-							((this.covalentRadius+a.covalentRadius)*1.2)/scale ){
-					//Check which ratio is highest, of all.
-					max = currentDistance/covalentDistance;
-					thatMax = a;
-					moleculeBelowMinMaxDist = true;
-				}
-			}
-			if(moleculeBelowMinMaxDist){
-				if(thatMin != null){
-//					System.out.println("min "+thatMin);
-					rangeMin = (((this.covalentRadius+thatMin.covalentRadius)/1.2)/scale )
-							-Calculations.senterAvstandDouble(this, thatMin);
-					if(thatMax != null){
-						rangeMax = Calculations.senterAvstandDouble(this, thatMax) 
-								- (((this.covalentRadius+thatMax.covalentRadius)*1.2)/scale );
-						if(rangeMax > rangeMin)
-							moveTowards(thatMax);
-						else
-							moveAway(thatMin);
-						
-					}
-					else
-						moveAway(thatMin);
-				}
-				else{
-//					System.out.println("max "+thatMax);
-						moveTowards(thatMax);
-				}
-				
-			}
-		}
-	}
+	
 	
 	public boolean hasCollided(atom that){
 		if(this == that) return false;
-		return Calculations.senterAvstand(this,that) <= (this.getVdwRadius()+that.getVdwRadius())/scale;
+		return Calculations.senterAvstand(this,that) <= (this.getVdwRadius()+that.getVdwRadius())/getScale();
 	}
-	public void moveAway(atom that){
-		boolean xg = Calculations.xRetning(this, that) > 0;
-		boolean yg = Calculations.yRetning(this, that) > 0;
-		boolean zg = Calculations.zRetning(this, that) > 0;
-//		if(that.getBindNumber() <= 1){
-			if(xg)
-				xPos = xPos + 1;
-			else
-				xPos = xPos - 1;
-			if(yg)
-				yPos = yPos + 1;
-			else
-				yPos = yPos - 1;
-			if(zg)
-				zPos = zPos + 1;
-			else
-				zPos = zPos - 1;
-		
-	}
-	public void moveTowards(atom that){
-		boolean xg = Calculations.xRetning(this, that) > 0;
-		boolean yg = Calculations.yRetning(this, that) > 0;
-		boolean zg = Calculations.zRetning(this, that) > 0;
-		
-		if(xg)
-			xPos = xPos - 1;
-		else
-			xPos = xPos + 1;
-		if(yg)
-			yPos = yPos - 1;
-		else
-			yPos = yPos + 1;
-		if(zg)
-			zPos = zPos - 1;
-		else
-			zPos = zPos + 1;
-		
+
 	
-	}
-	public void moveRandomly(){
-		xPos = xPos +(random.nextInt(3)-1);
-		yPos = yPos +(random.nextInt(3)-1);
-		zPos = zPos +(random.nextInt(3)-1);
-	}
 	
 	public int getVdwRadius() {
 		return this.vdwRadius;
@@ -315,40 +157,8 @@ public class atom {
 	public void setElectronAffinity(int electronAffinity) {
 		this.electronAffinity = electronAffinity;
 	}
-	public boolean compareElectronAffinity(atom that) {
-		if(this.electronAffinity - that.electronAffinity > 3){
-			if(this.getName().equals("hydrogen")){
-				if(this.getAffinityElectrons().size() == 0 &&  that.getAffinityElectrons().size() < 2){
-					this.getAffinityElectrons().add(that);
-					that.getAffinityElectrons().add(this);
-					return true;
-				}
-				else if(this.getAffinityElectrons().size() < 2 &&  that.getAffinityElectrons().size() == 0){
-					this.getAffinityElectrons().add(that);
-					that.getAffinityElectrons().add(this);
-					return true;
-				}
-				
-			}
-		}
-		return false;
-	}
-	public void ElectronAffinityAction() {
-		if(!getAffinityElectrons().isEmpty()){
-			atom currentAtom = null;
-			for(atom a: getAffinityElectrons()){
-				if(random.nextInt(5) == 4){
-					currentAtom = a;
-				}
-			}
-			if(currentAtom != null){
-				getAffinityElectrons().remove(currentAtom);
-				currentAtom.getAffinityElectrons().remove(this);
-				this.unBind(currentAtom);
-			}
-		}
-		
-	}
+	
+	
 	public void setVdwRadius(int vdwRadius) {
 		this.vdwRadius = vdwRadius;
 	}
@@ -425,6 +235,24 @@ public class atom {
 	}
 	public void setLastZPos(int lastZPos) {
 		this.lastZPos = lastZPos;
+	}
+	public int getCovalentRadius() {
+		return covalentRadius;
+	}
+	public void setCovalentRadius(int covalentRadius) {
+		this.covalentRadius = covalentRadius;
+	}
+	public boolean isColition() {
+		return colition;
+	}
+	public void setColition(boolean colition) {
+		this.colition = colition;
+	}
+	public static int getScale() {
+		return scale;
+	}
+	public static void setScale(int scale) {
+		atom.scale = scale;
 	}
 	
 }

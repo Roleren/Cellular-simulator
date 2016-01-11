@@ -14,7 +14,7 @@ public class Oxygen extends atom {
 		materialColor.setSpecularColor(Color.rgb(200, 20, 20));
 		materialColor.setDiffuseColor(Color.rgb(230, 20, 20));
 		setWeight(isotope);
-		covalentRadius = 66;
+		setCovalentRadius(66);
 		vdwRadius = 152;
 		setNumberOfValenceElectrons(6);
 		electronAffinity = 3;
