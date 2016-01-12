@@ -113,10 +113,10 @@ public class Painter extends Pane {
 		
 		getChildren().clear();
 		addChildren();
-		System.out.println("Children: "+this.getChildren().size());
-		for(Node e : this.getChildren()){
-			System.out.println("Child: "+e.toString());
-		}
+//		System.out.println("Children: "+this.getChildren().size());
+//		for(Node e : this.getChildren()){
+//			System.out.println("Child: "+e.toString());
+//		}
 	}
 	
 	

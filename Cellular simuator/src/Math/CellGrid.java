@@ -26,26 +26,24 @@ public class CellGrid {
 	
 	public void updateCellGrid(Simulator simulator){
 		for(atom a: simulator.getAtoms()){
-			a.updateOldPositions();
-			System.out.println("Simulator size: "+ simulator.getAtoms().size());
-			System.out.println((a.getxPos()+a.getyPos()+a.getzPos())/d);
-			System.out.println(a.getxPos()+" "+a.getyPos()+" "+a.getzPos());
-
-			if(!cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d).remove(a)){
-				System.out.println("Remove error");
-				cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d).remove(a);
-				System.out.println("hello");
-			}
-			
-			cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).add(a);
-			System.out.println(!cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).contains(a));
-			System.out.println("current cellList size:"+ cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).size());
-			if(!cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).contains(a)){
-				System.out.println("error");
-				System.out.println((a.getxPos()+a.getyPos()+a.getzPos())/d);
-				System.out.println(a.getxPos()+" "+a.getyPos()+" "+a.getzPos());
-			}
+			removeAtomFromOldPosition(a);
+			addAtomInNewPosition(a);
 		} 
+	}
+	
+	private void removeAtomFromOldPosition(atom a){
+		a.updateOldPositions();
+		boolean cantRemove = !cellLists.get((a.getLastXPos()+a.getLastYPos()+a.getLastZPos())/d)
+				.remove(a);
+		if(cantRemove){
+			System.out.println("Remove error");
+			cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).remove(a);
+			System.out.println("hello");
+		}
+	}
+	
+	private void addAtomInNewPosition(atom a){
+		cellLists.get((a.getxPos()+a.getyPos()+a.getzPos())/d).add(a);
 	}
 	
 	public ArrayList<ArrayList<atom>> getCellLists() {

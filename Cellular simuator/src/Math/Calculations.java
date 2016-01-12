@@ -3,6 +3,8 @@ package Math;
 import Atoms.atom;
 
 public class Calculations {
+	
+	
 	/**
 	 * Euclidean distance
 	 * @param one
@@ -42,4 +44,5 @@ public class Calculations {
 		int yr = (one.getyPos()-two.getyPos()/dist);
 		return yr;
 	}
+	
 }

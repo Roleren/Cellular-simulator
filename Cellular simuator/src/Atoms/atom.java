@@ -242,7 +242,7 @@ public class atom {
 	public void setCovalentRadius(int covalentRadius) {
 		this.covalentRadius = covalentRadius;
 	}
-	public boolean isColition() {
+	public boolean isColided() {
 		return colition;
 	}
 	public void setColition(boolean colition) {

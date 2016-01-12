@@ -26,6 +26,15 @@ public class ElectronAffinityAction {
 		return false;
 	}
 	
+	public static boolean canAffinityBind(atom one, atom that){
+		if(!one.getBoundAtoms().contains(that)
+				&& one.isBound() && that.isBound()
+				&& ElectronAffinityAction.compareElectronAffinity(one,that)){
+			return true;
+		}
+		return false;
+	}
+	
 	public static void RandomUnbonding(atom one) {
 		if(!one.getAffinityElectrons().isEmpty()){
 			atom currentAtom = null;

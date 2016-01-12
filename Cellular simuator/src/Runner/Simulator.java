@@ -38,12 +38,6 @@ public class Simulator {
 		gridOranizer();
 	}
 	
-	
-
-	
-
-
-
 	public Simulator(int xMax,int yMax,int zMax,int xMin,int yMin,int zMin ){
 		testStart(xMax,yMax,zMax, xMin,yMin, zMin);
 		
@@ -69,7 +63,7 @@ public class Simulator {
 		System.out.println(atom.size());
 		testStart(xMax,yMax,zMax, xMin,yMin, zMin);
 	}
-	public void testStart(int xMax,int yMax,int zMax, int xMin,int yMin,int zMin){
+	private void testStart(int xMax,int yMax,int zMax, int xMin,int yMin,int zMin){
 		atom.add(new Carbon(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
 		atom.add(new Carbon(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
 		atom.add(new Hydrogen(random.nextInt(xMax-xMin)+xMin, random.nextInt(yMax-yMin)+ yMin, random.nextInt(zMax-zMin)+zMin));
@@ -90,7 +84,7 @@ public class Simulator {
 	 * Multithreaded execution that divides atom operations into 4 lists, that works 
 	 * cuncurrent. 
 	 */
-	public void objectExecutorMultiThreaded(){
+	private void objectExecutorMultiThreaded(){
 		ExecutorService service = Executors.newFixedThreadPool(4);
 		futures = new ArrayList<Future<Runnable>>();
 		thread1 = new Thread(){
@@ -138,7 +132,7 @@ public class Simulator {
 		service.shutdown();
 	}
 	
-	public void doTasks(ArrayList<ArrayList<atom>> process){
+	private void doTasks(ArrayList<ArrayList<atom>> process){
 		//Update interactions and positions
 		int i = 0;
 		for(ArrayList<atom> currentList : process){
@@ -148,7 +142,7 @@ public class Simulator {
 				AtomActions.Action(currentAtom, this);
 			}
 		}
-		System.out.println("i is: "+i);
+//		System.out.println("Thread List contains: "+i);
 		
 	}
 }
