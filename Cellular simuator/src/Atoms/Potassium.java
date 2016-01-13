@@ -1,12 +1,11 @@
 package Atoms;
 
-
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 
 public class Potassium extends atom {
 
-	public Potassium(int xPos,int yPos, int zPos){
+	public Potassium(int xPos, int yPos, int zPos) {
 		isotope = 39;
 		name = "potassium";
 		charName = 'K';
@@ -19,14 +18,10 @@ public class Potassium extends atom {
 		vdwRadius = 275;
 		setNumberOfValenceElectrons(1);
 		electronAffinity = 42;
-		
+
 		setCharge(1);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(1);
 	}
-	
-	
-	
+
 }

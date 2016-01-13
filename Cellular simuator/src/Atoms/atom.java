@@ -3,11 +3,11 @@ package Atoms;
 import java.util.ArrayList;
 
 import LowerObjects.Bond;
-import Math.Calculations;
+import Math.VdwCalculations;
 import javafx.scene.paint.PhongMaterial;
 
 public class atom {
-	//Standard constants
+	// Standard constants
 	int isotope;
 	int weight;
 	private int covalentRadius;
@@ -15,26 +15,23 @@ public class atom {
 	int electronAffinity;
 	public String type = "atom";
 	private static int scale = 10;
-	//divisor for scale
-	
-	
+
 	char charName;
-	
-	
+
 	String color;
 	protected String name;
 
-	//Arraylists for bound and affinity electrons
+	// Arraylists for bound and affinity electrons
 	private ArrayList<atom> affinityElectrons = new ArrayList<atom>(2);
 	ArrayList<atom> boundAtoms = new ArrayList<atom>();
-	
-	//Standard variables
+
+	// Standard variables
 	private boolean bound = false;
 	private int NumberOfValenceElectrons;
 	private int charge;
 	private int bindNumber;
 	private int maxBindNumber;
-	//Position variables
+	// Position variables
 	int xPos;
 	int yPos;
 	int zPos;
@@ -42,35 +39,35 @@ public class atom {
 	private int lastXPos;
 	private int lastYPos;
 	private int lastZPos;
-//	private int dv;
-	
-	
-	//Booleans
-	boolean moleculeBelowMinMaxDist = false;
+	// private int dv;
+
+	// Booleans
 	private boolean colition = false;
-	//Extra objects
-	
+	// Extra objects
+
 	PhongMaterial materialColor;
-	
-	
+
 	/*
 	 * Checks if the atom can bind another atom
 	 */
-	public boolean canBind(atom that){
+	public boolean canBind(atom that) {
 		return Bond.canBind(this, that);
 	}
-	public void bind(atom that){
-		Bond.BindSingle(this,that);
+
+	public void bind(atom that) {
+		Bond.BindSingle(this, that);
 	}
-	public void unBind(atom that){
-		Bond.BindSingleRemove(this,that);
+
+	public void unBind(atom that) {
+		Bond.BindSingleRemove(this, that);
 	}
-	
+
 	public boolean isBound() {
 		return bound;
 	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 
@@ -89,7 +86,7 @@ public class atom {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	
+
 	public int getxPos() {
 		return xPos;
 	}
@@ -105,70 +102,58 @@ public class atom {
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
 	}
+
 	public int getzPos() {
 		return zPos;
 	}
+
 	public void setzPos(int zPos) {
 		this.zPos = zPos;
 	}
-	
-		
+
 	public void updateOldPositions() {
 		lastXPos = xPos;
 		lastYPos = yPos;
 		lastZPos = zPos;
 	}
-	public void checkBorder(){
-		if(xPos < 110 ){
-			xPos +=2;
-		}
-		else if(xPos > 490){
-			xPos -=2;
-		}
-		else if(yPos < 110){
-			yPos +=2;
-		}
-		else if(yPos > 295){
-			yPos -=2;
-		}
-		else if(zPos < 110){
-			zPos +=2;
-		}
-		else if(zPos > 490){
-			zPos -=2;
-		}
-		
-	}
-	
-	
-	public boolean hasCollided(atom that){
-		if(this == that) return false;
-		return Calculations.senterAvstand(this,that) <= (this.getVdwRadius()+that.getVdwRadius())/getScale();
+
+	public boolean hasCollided(atom that) {
+		if (this == that)
+			return false;
+		return VdwCalculations.isCurrentDistanceLessWdv(this,that);
 	}
 
-	
-	
+	public void setStartPositions(int xPos, int yPos, int zPos) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.zPos = zPos;
+		updateOldPositions();
+	}
+
 	public int getVdwRadius() {
 		return this.vdwRadius;
 	}
+
 	public int getElectronAffinity() {
 		return electronAffinity;
 	}
+
 	public void setElectronAffinity(int electronAffinity) {
 		this.electronAffinity = electronAffinity;
 	}
-	
-	
+
 	public void setVdwRadius(int vdwRadius) {
 		this.vdwRadius = vdwRadius;
 	}
+
 	public ArrayList<atom> getBoundAtoms() {
 		return boundAtoms;
 	}
+
 	public void setBoundAtoms(ArrayList<atom> boundAtoms) {
 		this.boundAtoms = boundAtoms;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -188,71 +173,93 @@ public class atom {
 	public PhongMaterial getMaterialColor() {
 		return materialColor;
 	}
+
 	public void setMaterialColor(PhongMaterial materialColor) {
 		this.materialColor = materialColor;
 	}
+
 	public void setBound(boolean bound) {
 		this.bound = bound;
 	}
+
 	public int getNumberOfValenceElectrons() {
 		return NumberOfValenceElectrons;
 	}
+
 	public void setNumberOfValenceElectrons(int numberOfValenceElectrons) {
 		NumberOfValenceElectrons = numberOfValenceElectrons;
 	}
+
 	public int getBindNumber() {
 		return bindNumber;
 	}
+
 	public void setBindNumber(int bindNumber) {
 		this.bindNumber = bindNumber;
 	}
+
 	public int getMaxBindNumber() {
 		return maxBindNumber;
 	}
+
 	public void setMaxBindNumber(int maxBindNumber) {
 		this.maxBindNumber = maxBindNumber;
 	}
+
 	public ArrayList<atom> getAffinityElectrons() {
 		return affinityElectrons;
 	}
+
 	public void setAffinityElectrons(ArrayList<atom> affinityElectrons) {
 		this.affinityElectrons = affinityElectrons;
 	}
+
 	public int getLastXPos() {
 		return lastXPos;
 	}
+
 	public void setLastXPos(int lastXPos) {
 		this.lastXPos = lastXPos;
 	}
+
 	public int getLastYPos() {
 		return lastYPos;
 	}
+
 	public void setLastYPos(int lastYPos) {
 		this.lastYPos = lastYPos;
 	}
+
 	public int getLastZPos() {
 		return lastZPos;
 	}
+
 	public void setLastZPos(int lastZPos) {
 		this.lastZPos = lastZPos;
 	}
+
 	public int getCovalentRadius() {
 		return covalentRadius;
 	}
+
 	public void setCovalentRadius(int covalentRadius) {
 		this.covalentRadius = covalentRadius;
 	}
+
 	public boolean isColided() {
 		return colition;
 	}
+
 	public void setColition(boolean colition) {
 		this.colition = colition;
 	}
+
 	public static int getScale() {
 		return scale;
 	}
+
 	public static void setScale(int scale) {
 		atom.scale = scale;
 	}
-	
+
 }

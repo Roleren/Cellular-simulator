@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 
 public class Hydrogen extends atom {
-	public Hydrogen(int xPos,int yPos, int zPos){
+	public Hydrogen(int xPos, int yPos, int zPos) {
 		isotope = 1;
 		name = "hydrogen";
 		charName = 'H';
@@ -18,9 +18,7 @@ public class Hydrogen extends atom {
 		setNumberOfValenceElectrons(1);
 		electronAffinity = 50;
 		setCharge(1);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(1);
 	}
 }

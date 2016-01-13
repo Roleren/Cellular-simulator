@@ -5,7 +5,7 @@ import javafx.scene.paint.PhongMaterial;
 
 public class Nitrogen extends atom {
 
-	public Nitrogen(int xPos,int yPos, int zPos){
+	public Nitrogen(int xPos, int yPos, int zPos) {
 		isotope = 14;
 		name = "nitrogen";
 		charName = 'N';
@@ -19,12 +19,8 @@ public class Nitrogen extends atom {
 		setNumberOfValenceElectrons(5);
 		electronAffinity = 5;
 		setCharge(+5);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(3);
 	}
-	
-	
-	
+
 }

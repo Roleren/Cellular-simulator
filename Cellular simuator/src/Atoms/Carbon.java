@@ -1,13 +1,11 @@
 package Atoms;
 
-
-
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 
 public class Carbon extends atom {
 
-	public Carbon(int xPos,int yPos, int zPos){
+	public Carbon(int xPos, int yPos, int zPos) {
 		isotope = 12;
 		name = "carbon";
 		charName = 'C';
@@ -20,14 +18,10 @@ public class Carbon extends atom {
 		vdwRadius = 170;
 		setNumberOfValenceElectrons(4);
 		electronAffinity = 7;
-		
+
 		setCharge(4);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(4);
 	}
-	
-	
-	
+
 }

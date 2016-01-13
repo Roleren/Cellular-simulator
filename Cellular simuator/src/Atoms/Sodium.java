@@ -1,12 +1,11 @@
 package Atoms;
 
-
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 
 public class Sodium extends atom {
 
-	public Sodium(int xPos,int yPos, int zPos){
+	public Sodium(int xPos, int yPos, int zPos) {
 		isotope = 23;
 		name = "sodium";
 		charName = 'N';
@@ -19,14 +18,10 @@ public class Sodium extends atom {
 		vdwRadius = 227;
 		setNumberOfValenceElectrons(1);
 		electronAffinity = 40;
-		
+
 		setCharge(1);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(1);
 	}
-	
-	
-	
+
 }

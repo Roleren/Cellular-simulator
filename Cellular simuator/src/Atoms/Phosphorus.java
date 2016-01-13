@@ -5,7 +5,7 @@ import javafx.scene.paint.PhongMaterial;
 
 public class Phosphorus extends atom {
 
-	public Phosphorus(int xPos,int yPos, int zPos){
+	public Phosphorus(int xPos, int yPos, int zPos) {
 		isotope = 31;
 		name = "phosphorus";
 		charName = 'P';
@@ -19,14 +19,8 @@ public class Phosphorus extends atom {
 		setNumberOfValenceElectrons(6);
 		electronAffinity = 6;
 		setCharge(+5);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(5);
 	}
-	
-	
-	
+
 }
-
-

@@ -5,7 +5,7 @@ import javafx.scene.paint.PhongMaterial;
 
 public class Oxygen extends atom {
 
-	public Oxygen(int xPos,int yPos, int zPos){
+	public Oxygen(int xPos, int yPos, int zPos) {
 		isotope = 16;
 		name = "oxygen";
 		charName = 'O';
@@ -19,13 +19,8 @@ public class Oxygen extends atom {
 		setNumberOfValenceElectrons(6);
 		electronAffinity = 3;
 		setCharge(-2);
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.zPos = zPos;
+		setStartPositions(xPos, yPos, zPos);
 		setMaxBindNumber(2);
 	}
-	
-	
-	
-}
 
+}

@@ -20,29 +20,29 @@ import Molecules.Phosphate;
 import Molecules.Ribose;
 
 public class PossibleObjects {
-	
-	public static ArrayList<atom> createListOfObjects(){
+
+	public static ArrayList<atom> createListOfObjects() {
 		ArrayList<atom> possibleObjects = new ArrayList<atom>();
-		//Atoms
+		// Atoms
 		possibleObjects = new ArrayList<atom>();
-		possibleObjects.add(new Carbon(0,0,0));
-		possibleObjects.add(new Hydrogen(0,0,0));
-		possibleObjects.add(new Oxygen(0,0,0));
-		possibleObjects.add(new Phosphorus(0,0,0));
-		possibleObjects.add(new Nitrogen(0,0,0));
-		possibleObjects.add(new Sodium(0,0,0));
-		possibleObjects.add(new Chlorine(0,0,0));
-		possibleObjects.add(new Potassium(0,0,0));
-		//Molecules
+		possibleObjects.add(new Carbon(0, 0, 0));
+		possibleObjects.add(new Hydrogen(0, 0, 0));
+		possibleObjects.add(new Oxygen(0, 0, 0));
+		possibleObjects.add(new Phosphorus(0, 0, 0));
+		possibleObjects.add(new Nitrogen(0, 0, 0));
+		possibleObjects.add(new Sodium(0, 0, 0));
+		possibleObjects.add(new Chlorine(0, 0, 0));
+		possibleObjects.add(new Potassium(0, 0, 0));
+		// Molecules
 		possibleObjects.add(new H2O());
 		possibleObjects.add(new CO2());
 		possibleObjects.add(new CH4());
 		possibleObjects.add(new Phosphate());
 		possibleObjects.add(new Ribose());
 		possibleObjects.add(new Adenine());
-		//Environments
+		// Environments
 		possibleObjects.add(new Water());
-		
+
 		return possibleObjects;
 	}
 }
