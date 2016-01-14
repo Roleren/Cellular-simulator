@@ -13,7 +13,7 @@ public class Movements {
 		boolean xg = Calculations.xRetning(one, two) > 0;
 		boolean yg = Calculations.yRetning(one, two) > 0;
 		boolean zg = Calculations.zRetning(one, two) > 0;
-		
+		System.out.println(one.getxPos()+" "+one.getyPos()+" "+one.getzPos());
 		if (xg)
 			one.setxPos(one.getxPos() + 1);
 		else
@@ -26,6 +26,7 @@ public class Movements {
 			one.setzPos(one.getzPos() + 1);
 		else
 			one.setzPos(one.getzPos() - 1);
+		System.out.println(one.getxPos()+" "+one.getyPos()+" "+one.getzPos());
 
 	}
 

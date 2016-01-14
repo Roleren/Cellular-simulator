@@ -7,11 +7,15 @@ import Atoms.atom;
 import Math.VdwCalculations;
 import Runner.Simulator;
 
+/**
+ * Primary starting Class for atom behavior
+ * 
+ */
 public class AtomActions {
 	static int scale = atom.getScale();
 
 	/**
-	 * Primary starting point for atom behavior
+	 * Primary starting method for atom behavior
 	 * 
 	 * @param one
 	 * @param simulator
@@ -28,8 +32,8 @@ public class AtomActions {
 
 	public static void freeMovement(atom one, Simulator simulator) {
 		atom that = atomCloseEnoughToReact(one, simulator);
-		boolean ToocloseAtomExist = (that != null);
-		if (ToocloseAtomExist) {
+		boolean AnAtomIsTooClose = (that != null);
+		if (AnAtomIsTooClose) {
 			// if(ElectronAffinityAction.canAffinityBind(one, that))
 			// one.bind(that);
 			// else

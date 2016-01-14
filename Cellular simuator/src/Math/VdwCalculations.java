@@ -26,7 +26,7 @@ public class VdwCalculations {
 	}
 
 	public static boolean isCurrentDistanceLessWdv(atom one, atom a) {
-		System.out.println("distance: "+Calculations.senterAvstandDouble(one, a)+" vdw: "+vanDerWallsRatio(one, a));
+//		System.out.println("distance: "+Calculations.senterAvstandDouble(one, a)+" vdw: "+vanDerWallsRatio(one, a));
 		return Calculations.senterAvstandDouble(one, a) < vanDerWallsRatio(one, a);
 	}
 	private static double vanDerWallsRatio(atom one, atom a) {

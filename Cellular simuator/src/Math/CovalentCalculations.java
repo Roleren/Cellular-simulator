@@ -32,6 +32,7 @@ public class CovalentCalculations {
 	}
 
 	public static double getMaximumCovalentDistance(atom one, atom thatMax) {
+		System.out.println(((one.getCovalentRadius() + thatMax.getCovalentRadius()) * 1.2) / scale);
 		return ((one.getCovalentRadius() + thatMax.getCovalentRadius()) * 1.2) / scale;
 	}
 

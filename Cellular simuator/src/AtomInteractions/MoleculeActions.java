@@ -44,6 +44,7 @@ public class MoleculeActions {
 	private static void MoveTowardOrAway(atom thatMin, atom thatMax, atom one, Simulator simulator) {
 
 		boolean MinOrMaxAtomExists = (thatMin != null || thatMax != null);
+		System.out.println("min: "+thatMin+" max: "+thatMax);
 		if (MinOrMaxAtomExists) {
 			if (thatMin != null) {
 
