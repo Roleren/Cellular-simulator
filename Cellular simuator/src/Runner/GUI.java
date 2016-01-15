@@ -26,19 +26,20 @@ public class GUI extends Application {
 	static int z_max;
 	static int z_min;
 	private static int scale = 100;
-
+	private int step;
+	//booleans
 	private boolean paused;
 	boolean rotating = false;
-	private int step;
+	
 
-	static Simulator simulator;
+	
 	// Scene objects
 	private Painter mainFrame;
 	Pane creations, statusBar;
-
+	static Simulator simulator;
 	// Light, timer, mousehandler
 	private AnimationTimer timer;
-
+	
 	MouseHandler mouseActions;
 	// Cell lists for optimization
 	int numberOfcellLists;
@@ -81,7 +82,7 @@ public class GUI extends Application {
 
 		// Create node buttons
 		MakeButtons buttons = new MakeButtons();
-		buttons.makeButton(border, simulator, this);
+		buttons.makeButton(border, simulator, this, root);
 
 		setInitialChildrenToRoot(border, canvas, root);
 
@@ -205,5 +206,6 @@ public class GUI extends Application {
 	public static void setScale(int scale) {
 		GUI.scale = scale;
 	}
+	
 
 }

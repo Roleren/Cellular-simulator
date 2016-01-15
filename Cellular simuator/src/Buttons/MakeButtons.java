@@ -7,6 +7,7 @@ import Runner.Simulator;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -15,8 +16,11 @@ public class MakeButtons {
 	Button restart, pause, rotate, exit;
 	GridPane grid = new GridPane();
 
-	public void makeButton(BorderPane border, Simulator simulator, GUI gui) {
-
+	public void makeButton(BorderPane border, Simulator simulator, GUI gui, Group root) {
+		
+		//Make menu
+		new TopMenu(grid, gui);
+		
 		// Buttons
 		restart = new Button("Restart");
 		restart.setOnAction(new EventHandler<ActionEvent>() {
@@ -68,7 +72,7 @@ public class MakeButtons {
 		});
 		// creating object buttons
 		GridPane grid1 = new GridPane();
-		int i = 1;
+		int i = 2;
 		Button currentButton;
 		for (atom currentObject : PossibleObjects.createListOfObjects()) {
 			currentButton = new Button(currentObject.toString());
@@ -85,10 +89,10 @@ public class MakeButtons {
 			i++;
 		}
 		// Add to parrent scene
-		grid.add(restart, 1, 0);
-		grid.add(pause, 2, 0);
-		grid.add(rotate, 3, 0);
-		grid.add(exit, 4, 0);
+		grid.add(restart, 1, 1);
+		grid.add(pause, 2, 1);
+		grid.add(rotate, 3, 1);
+		grid.add(exit, 4, 1);
 		border.setTop(grid);
 		border.setLeft(grid1);
 	}

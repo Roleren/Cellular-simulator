@@ -25,6 +25,11 @@ public class Painter extends Pane {
 	//Used to make sure the drawing are correct size compared to screen. 
 	//ig. 120 vdw = 12 vdw on screen if scale = 10
 	private int scale = 10;
+	
+	// Booleans 
+	boolean showCovalentBonds = true;
+	boolean showAffinityBonds = true;
+	
 	Image backGround;
 	// material for drawings
 	PhongMaterial bond = new PhongMaterial();
@@ -145,24 +150,29 @@ public class Painter extends Pane {
 			this.getChildren().add(sphere);
 
 			if (a.isBound()) {
+				
 				// Covalent bonds
-				for (atom currentAtom : a.getBoundAtoms()) {
-					Cylinder cylinder = new Cylinder(50 / getScale(), 100 / getScale());
-					cylinder.setMaterial(bond);
-					cylinder.setTranslateX((a.getxPos() + currentAtom.getxPos()) / 2);
-					cylinder.setTranslateY((a.getyPos() + currentAtom.getyPos()) / 2);
-					cylinder.setTranslateZ((a.getzPos() + currentAtom.getzPos()) / 2);
-					this.getChildren().add(cylinder);
+				if(showCovalentBonds){
+					for (atom currentAtom : a.getBoundAtoms()) {
+						Cylinder cylinder = new Cylinder(50 / getScale(), 100 / getScale());
+						cylinder.setMaterial(bond);
+						cylinder.setTranslateX((a.getxPos() + currentAtom.getxPos()) / 2);
+						cylinder.setTranslateY((a.getyPos() + currentAtom.getyPos()) / 2);
+						cylinder.setTranslateZ((a.getzPos() + currentAtom.getzPos()) / 2);
+						this.getChildren().add(cylinder);
+					}
 				}
 				// HydrogenBonds
-				if (!a.getAffinityElectrons().isEmpty()) {
-					for (atom b : a.getAffinityElectrons()) {
-						Cylinder cylinder = new Cylinder(50 / getScale(), 100 / getScale());
-						cylinder.setMaterial(hydrogenBond);
-						cylinder.setTranslateX((a.getxPos() + b.getxPos()) / 2);
-						cylinder.setTranslateY((a.getyPos() + b.getyPos()) / 2);
-						cylinder.setTranslateZ((a.getzPos() + b.getzPos()) / 2);
-						this.getChildren().add(cylinder);
+				if(showAffinityBonds){
+					if (!a.getAffinityElectrons().isEmpty()) {
+						for (atom b : a.getAffinityElectrons()) {
+							Cylinder cylinder = new Cylinder(50 / getScale(), 100 / getScale());
+							cylinder.setMaterial(hydrogenBond);
+							cylinder.setTranslateX((a.getxPos() + b.getxPos()) / 2);
+							cylinder.setTranslateY((a.getyPos() + b.getyPos()) / 2);
+							cylinder.setTranslateZ((a.getzPos() + b.getzPos()) / 2);
+							this.getChildren().add(cylinder);
+						}
 					}
 				}
 			}
@@ -269,6 +279,21 @@ public class Painter extends Pane {
 
 	public void setScale(int scale) {
 		this.scale = scale;
+	}
+	
+	public void switchCovalentBondVisibility(){
+		System.out.println("switch");
+		if(showCovalentBonds)
+			showCovalentBonds = false;
+		else 
+			showCovalentBonds = true;
+	}
+	
+	public void switchAffinityBondVisibility(){
+		if(showAffinityBonds)
+			showAffinityBonds = false;
+		else 
+			showAffinityBonds = true;
 	}
 
 	//// public void setScroll(){
